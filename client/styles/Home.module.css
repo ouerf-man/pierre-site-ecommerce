@@ -1,0 +1,186 @@
+.main {
+  height: 100vh;
+  width: 100%;
+}
+.logo {
+  position: absolute;
+  bottom: 5% !important;
+  left: 2% !important;
+  display: inline-block;
+  z-index: 100;
+}
+
+.aboutLink {
+  background: #ed1c24;
+  position: absolute;
+  display: flex;
+  align-items: center;
+  bottom: 0;
+  right: 0;
+  color: #fff;
+  width: 150px !important;
+  height: 150px;
+  z-index: 100;
+  border: 2px solid #fff;
+  border-radius: 90%;
+  text-align: center;
+  bottom: 5% !important;
+  right: 2% !important;
+}
+
+.aboutLink span {
+  color: #fff !important;
+  font-size: 10px;
+  font-weight: bold;
+}
+
+.carousel_caption {
+  top: 20%;
+}
+
+.carousel_caption h3 {
+  font-size: 3.5rem;
+}
+.carousel_caption p {
+  font-size: 1.5rem;
+}
+
+.overlay {
+  position: absolute;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  right: 0;
+  left: 0;
+  top: 0;
+  background-color: #1c1c1c;
+  opacity: 0.3;
+}
+
+.blackbg {
+  position: absolute;
+  width: 100%;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  background-color: #000;
+  z-index: 99;
+  opacity: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  animation: fadeOut ease 10s;
+  animation-delay: 0.5s;
+  -webkit-animation: fadeOut ease 10s;
+  -moz-animation: fadeOut ease 10s;
+  -o-animation: fadeOut ease 10s;
+  -ms-animation: fadeOut ease 10s;
+}
+
+.blackbg h1 {
+  color: #fff;
+  font-size: 4rem;
+  position: relative;
+  top: 0%;
+  animation-delay: 1s;
+  animation: slideUp ease 5s;
+  -webkit-animation: slideUp ease 5s;
+  -moz-animation: slideUp ease 5s;
+  -o-animation: slideUp ease 5s;
+  -ms-animation: slideUp ease 5s;
+}
+
+.blackbg p {
+  color: #fff;
+  opacity: 0.4;
+  position: relative;
+  top: 0%;
+  animation-delay: 1s;
+  animation: slideUp ease 5s;
+  -webkit-animation: slideUp ease 5s;
+  -moz-animation: slideUp ease 5s;
+  -o-animation: slideUp ease 5s;
+  -ms-animation: slideUp ease 5s;
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@-moz-keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@-webkit-keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@-o-keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@-ms-keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes slideUp {
+  0% {
+    top: 0;
+  }
+  100% {
+    top: -100%!important;
+  }
+}
+
+@-o-keyframes slideUp {
+  0% {
+    top: 0;
+  }
+  100% {
+    top: -100%!important;
+  }
+}
+
+@-moz-keyframes slideUp {
+  0% {
+    top: 0;
+  }
+  100% {
+    top: -100%!important;
+  }
+}
+
+@-webkit-keyframes slideUp {
+  0% {
+    top: 0;
+  }
+  100% {
+    top: -100%!important;
+  }
+}
