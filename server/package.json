@@ -1,0 +1,11 @@
+{
+  "name": "pierre-server",
+  "version": "1.0.0",
+  "description": "api de site web pierre",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
