@@ -8,6 +8,7 @@ const cors = require('cors');
 
 const dbService = require('./configs/db.service');
 
+const userRouter = require('./routes/user')
 
 const { renderFile } = require('jade');
 const app = express();
@@ -30,6 +31,10 @@ require("./utils/passport")(passport);
 // connecting to database
 dbService.establishConnection();
 
+app.use('/health',function(req,res){
+  res.send('health 100%')
+})
+app.use("/user",userRouter)
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

@@ -13,8 +13,8 @@ import {
 } from '@coreui/react'
 
 import { useRef } from 'react'
-import {allClasses } from 'src/services/api.service'
-
+import { uploadStudentExcel, allStudents } from 'src/services/api.service'
+import { useToasts } from "react-toast-notifications"
 const getBadge = status => {
   switch (status) {
     case 'Active': return 'success'
@@ -25,27 +25,28 @@ const getBadge = status => {
   }
 }
 
-const Classes = () => {
+const Users = () => {
   const history = useHistory()
   const queryPage = useLocation().search.match(/page=([0-9]+)/, '')
   const currentPage = Number(queryPage && queryPage[1] ? queryPage[1] : 1)
-  const [classes, setClasses] = useState(null);
+  const [students, setStudents] = useState(null);
   const [page, setPage] = useState(currentPage)
-
+  const { addToast } = useToasts()
   const fileInput = useRef(null);
 
   const pageChange = newPage => {
-    currentPage !== newPage && history.push(`/class?page=${newPage}`)
+    currentPage !== newPage && history.push(`/students?page=${newPage}`)
   }
 
-  const getAllClasses = async () => {
-    const result = await allClasses();
-    setClasses(result);
+
+  const getAllStudents = async () => {
+    const result = await allStudents();
+    setStudents(result);
   }
 
 
   useEffect(() => {
-    getAllClasses();
+    getAllStudents();
   }, [])
 
   useEffect(() => {
@@ -57,28 +58,24 @@ const Classes = () => {
       <CCol xl={12}>
         <CCard>
           <CCardHeader>
-            Classes
-            <CButton color="success" size="sm" className="ml-5" onClick={() => history.push("/create-class")}>
-                Ajouter Classe
+            Reportages
+            <CButton color="success" size="sm" className="ml-5" onClick={() => history.push("/create-reportage")}>
+              Ajouter un reportage
             </CButton>
-            {/*<CButton color="success" size="sm" className="ml-5" onClick={() => fileInput.current.click()}>
-              <input type="file" style={{display: "none"}} ref={fileInput} onChange={handleUpload}/>
-              Ajouter Etudiants d'apres un fichier xl
-              </CButton>  */}
           </CCardHeader>
           <CCardBody>
             <CDataTable
-              items={classes}
+              items={students}
               fields={[
-                { key: 'intitule', _classes: 'font-weight-bold' },
-                
+                { key: 'cin', _classes: 'font-weight-bold' },
+                'nom', 'prenom', 'email', 'date_de_naissance', 'sexe'
               ]}
               hover
               striped
               itemsPerPage={5}
               activePage={page}
               clickableRows
-              onRowClick={(item) => history.push(`/class/${item.id}`)}
+              onRowClick={(item) => history.push(`/reportages/${item.id}`)}
               scopedSlots={{
                 'status':
                   (item) => (
@@ -104,4 +101,4 @@ const Classes = () => {
   )
 }
 
-export default Classes
+export default Users

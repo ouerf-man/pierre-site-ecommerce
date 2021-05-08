@@ -5,8 +5,8 @@ const TheFooter = () => {
   return (
     <CFooter fixed={false}>
       <div>
-        <a href="#" target="_blank" rel="noopener noreferrer">Admin site INSAT</a>
-        <span className="ml-1">&copy; 2020 JEI.</span>
+        <a href="#" target="_blank" rel="noopener noreferrer">Pierre</a>
+        <span className="ml-1">&copy; 2021.</span>
       </div>
       {
         /*

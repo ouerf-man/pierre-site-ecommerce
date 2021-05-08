@@ -18,37 +18,9 @@ const _nav = [
   },
   {
     _tag: "CSidebarNavItem",
-    name: "étudiants",
-    to: "/students",
+    name: "reportages",
+    to: "/reportages",
     icon: "cil-user",
-  },
-  {
-    _tag: "CSidebarNavItem",
-    name: "classes",
-    to: "/class",
-    icon: "cil-chart-pie",
-  },
-  {
-    _tag: "CSidebarNavItem",
-    name: "année universitaire",
-    to: "/years",
-    icon: "cil-calendar",
-  },
-  {
-    _tag: "CSidebarNavItem",
-    name: "enseignant",
-    to: "/teachers",
-    icon: "cil-user",
-  },
-  {
-    _tag: "CSidebarNavTitle",
-    _children: ["content management"],
-  },
-  {
-    _tag: "CSidebarNavItem",
-    name: "actualites",
-    to: "/actualites",
-    icon: "cil-paperclip",
   },
   /*{
     _tag: 'CSidebarNavItem',
