@@ -86,9 +86,11 @@ input[type="reset"]:active {
 
 input[type="text"],
 input[type="email"],
+input[type="password"],
 select,
 textarea {
   background-color: #f6f6f6;
+  text-align: center!important;
   border: none;
   color: #0d0d0d;
   padding: 15px 32px;
@@ -105,10 +107,13 @@ textarea {
   transition: all 0.5s ease-in-out;
   -webkit-border-radius: 5px 5px 5px 5px;
   border-radius: 5px 5px 5px 5px;
+  text-align-last:center;
 }
+
 
 input[type="text"]:focus,
 input[type="email"]:focus,
+input[type="password"]:focus,
 textarea:focus,
 select:focus {
   background-color: #fff;

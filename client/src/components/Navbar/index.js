@@ -9,7 +9,7 @@ const buttonStyle = {
     right: '30px',
     backgroundColor: "#ed1c24",
     borderRadius: '50%',
-    zIndex: 100,
+    zIndex: 100000,
     width: 45,
     height: 45,
     transitionDuration: ".5s",
@@ -47,6 +47,9 @@ function Navbar() {
                 </Link>
                 <Link href="/temoignage">
                     <a>Témoignages</a>
+                </Link>
+                <Link href="/blog">
+                    <a>Blog</a>
                 </Link>
                 <Link href="/contactez-moi">
                     <a>Contact</a>

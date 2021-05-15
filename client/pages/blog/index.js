@@ -1,15 +1,15 @@
 import Head from 'next/head'
 import Link from "next/link"
 import Image from 'next/image'
-import styles from '../../styles/Reportage.module.css'
+import styles from '../../styles/Blog.module.css'
 
 export default function Home() {
     const reportages = [
         {
-            src: "https://images.pexels.com/photos/4126684/pexels-photo-4126684.jpeg",
+            src: "https://images.pexels.com/photos/4626371/pexels-photo-4626371.jpeg",
             alt: 'Korba passmenterie',
             title: "First slide label",
-            description: "Nulla vitae elit libero, a pharetra augue mollis interdum."
+            description: "Nulla vitae elit libero, a pharetra augue mollis interdum.Nulla vitae elit libero, a pharetra augue mollis interdum.Nulla vitae elit libero, a pharetra augue mollis interdum.Nulla vitae elit libero, a pharetra augue mollis interdum.Nulla vitae elit libero, a pharetra augue mollis interdum.Nulla vitae elit libero, a pharetra augue mollis interdum.Nulla vitae elit libero, a pharetra augue mollis interdum. Nulla vitae elit libero, a pharetra augue mollis interdum. Nulla vitae elit libero, a pharetra augue mollis interdum. Nulla vitae elit libero, a pharetra augue mollis interdum."
         },
         {
             src: "https://images.pexels.com/photos/3457273/pexels-photo-3457273.jpeg",
@@ -53,32 +53,30 @@ export default function Home() {
     return (
         <>
             <Head>
-                <title>Pierre Gassin | Reportages</title>
+                <title>Pierre Gassin | Blog</title>
                 <meta name="viewport" content="width=device-width,initial-scale=1" />
                 <link rel="icon" href="/logo-pierre-3.png" />
             </Head>
-            <main className="row w-100 flex-column flex-md-row  overflow-hidden mx-0">
-                <div className="col-xs-12 col-md-4 px-0 left-panel-parent">
+            <main className="row w-100 overflow-hidden mx-0">
+                <div className="col-xs-12 col-md-4 px-0">
                     <div className="left-panel">
                         <div className="py-5">
-                            <h1 className="left-title">Reportages</h1>
+                            <h1 className="left-title">Blog</h1>
                         </div>
                     </div>
                 </div>
-                <div className="col col-xs-12 row justify-content-around align-items-stretch pr-0 overflow-hidden">
+                <div className="col mt-5 row justify-content-around align-items-stretch pr-0 overflow-hidden">
                     {
                         reportages.map((e, i) =>
-                            <Link href={`/reportages/${e.title.toLocaleLowerCase().split(" ").join('-')}`} key={i}>
-                                <div className={`col-xs-5 col-md-4 px-0 ${styles.reportageItem} h-auto`}>
-                                    <Image src={e.src} alt={e.alt} layout="fill" objectFit="cover"/>
-                                    <div className={`${styles.overlay}`}>
-                                        <h2>
-                                            {e.title}
-                                        </h2>
-                                        <hr />
-                                        <p>
-                                            {e.description}
-                                        </p>
+                            <Link href={`/blog/${e.title.toLocaleLowerCase().split(" ").join('-')}`} key={i}>
+                                <div className={`mb-3 px-0 ${styles.blogItem}`}>
+                                    <Image height={"120"} width="auto" src={e.src} alt={e.alt} className={styles.image} objectFit="cover" objectPosition="50% 50%" />
+                                    <h2>{e.title}</h2>
+                                    <p>
+                                        {e.description}
+                                    </p>
+                                    <div className={styles.blur}>
+
                                     </div>
                                 </div>
                             </Link>

@@ -1,0 +1,42 @@
+.image {
+  object-fit: cover;
+}
+
+.blogItem {
+  height: 300px !important;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  width: 40%;
+  justify-content: space-around;
+  padding-bottom: 20px;
+}
+
+.blogItem h2 {
+  font-size: 25px;
+}
+
+.blogItem p {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  height: 35%;
+  opacity: 0.6;
+}
+
+.blogPageHeader {
+  height: 380px;
+  width: 100%;
+}
+
+.blogPageTitle{
+  color: #1c1c1c;
+  font-size: 2.5rem;
+  opacity: .8;
+  margin-top: 25px;
+}
+
+.blogPagePara{
+  font-size: 15px;
+  opacity: .8;
+  margin-top: 25px;
+}

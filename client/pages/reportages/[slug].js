@@ -45,7 +45,10 @@ export default function Home() {
                 <div className="col-md-4 px-0">
                     <div className="left-panel">
                         <div className="py-5">
-                            <h1 className="left-title" onClick={() => console.log(selectedImages)}>Korba Passementerie</h1>
+                            <h1 className="left-title">Korba Passementerie</h1>
+                            <p className="left-paragraph">Nulla vitae elit libero, a pharetra augue mollis interdum. Nulla vitae elit libero, a pharetra augue mollis interdum. Nulla vitae elit libero, a pharetra augue mollis interdum. Nulla vitae elit libero, a pharetra augue mollis interdum.
+                            </p>
+
                         </div>
                     </div>
                 </div>
@@ -53,8 +56,8 @@ export default function Home() {
                     {
                         reportages.map((e, i) =>
                             <div className="position-relative" key={i} >
-                                <img key={i} src={e.src} alt={e.alt} onClick={() => handleShow(i)}/>
-                                <input type="checkbox" checked={selectedImages.map(e=>e.id).includes(e.id)} onChange={(evt) => handleSelectImage(evt, e)} className={`${styles.checkbox} form-check-input`} />
+                                <img key={i} src={e.src} alt={e.alt} onClick={() => handleShow(i)} />
+                                <input type="checkbox" checked={selectedImages.map(e => e.id).includes(e.id)} onChange={(evt) => handleSelectImage(evt, e)} className={`${styles.checkbox} form-check-input`} />
                             </div>
                         )
                     }
@@ -70,8 +73,8 @@ export default function Home() {
                             reportages.map((e, i) => (
                                 <Carousel.Item key={i}>
                                     <div className="reportage-modal-image-container mx-auto position-relative">
-                                        <img key={i} src={e.src} alt={e.alt} className="d-block h-100"/>
-                                        <input type="checkbox" checked={selectedImages.map(e=>e.id).includes(e.id)} onChange={(evt) => handleSelectImage(evt, e)} className={`${styles.checkbox} form-check-input`} />
+                                        <img key={i} src={e.src} alt={e.alt} className="d-block h-100" />
+                                        <input type="checkbox" checked={selectedImages.map(e => e.id).includes(e.id)} onChange={(evt) => handleSelectImage(evt, e)} className={`${styles.checkbox} form-check-input`} />
                                     </div>
                                 </Carousel.Item>
                             ))
@@ -85,87 +88,47 @@ export default function Home() {
 
 const reportages = [
     {
-        id: 0,
-        src: "https://pierre-gassin.com/wp-content/uploads/2019/07/Korba-Passementerie-scaled.jpg",
+        src: "https://images.pexels.com/photos/4126684/pexels-photo-4126684.jpeg",
         alt: 'Korba passmenterie',
         title: "First slide label",
         description: "Nulla vitae elit libero, a pharetra augue mollis interdum."
     },
     {
-        id: 1,
-        src: "https://pierre-gassin.com/wp-content/uploads/2019/12/Tozeur-Briquetterie-20-scaled.jpg",
+        src: "https://images.pexels.com/photos/3457273/pexels-photo-3457273.jpeg",
         alt: 'Korba passmenterie',
         title: "First slide label",
         description: "Nulla vitae elit libero, a pharetra augue mollis interdum."
     },
     {
-        id: 2,
-        src: "https://pierre-gassin.com/wp-content/uploads/2019/12/Tabarka-Fort-Génois-et-Aiguilles-scaled.jpg",
+        src: "https://images.pexels.com/photos/2228561/pexels-photo-2228561.jpeg",
         alt: 'Korba passmenterie',
         title: "First slide label",
         description: "Nulla vitae elit libero, a pharetra augue mollis interdum."
     },
     {
-        id: 3,
-        src: "https://pierre-gassin.com/wp-content/uploads/2019/12/Tozeur-Briquetterie-20-scaled.jpg",
+        src: "https://images.pexels.com/photos/4626371/pexels-photo-4626371.jpeg",
         alt: 'Korba passmenterie',
         title: "First slide label",
         description: "Nulla vitae elit libero, a pharetra augue mollis interdum."
     },
     {
-        id: 4,
-        src: "https://pierre-gassin.com/wp-content/uploads/2019/07/Korba-Passementerie-scaled.jpg",
+        src: "https://images.pexels.com/photos/3120864/pexels-photo-3120864.jpeg",
         alt: 'Korba passmenterie',
         title: "First slide label",
         description: "Nulla vitae elit libero, a pharetra augue mollis interdum."
     },
     {
-        id: 5,
-        src: "https://pierre-gassin.com/wp-content/uploads/2019/12/Tozeur-Briquetterie-20-scaled.jpg",
+        src: "https://images.pexels.com/photos/2228560/pexels-photo-2228560.jpeg",
         alt: 'Korba passmenterie',
         title: "First slide label",
         description: "Nulla vitae elit libero, a pharetra augue mollis interdum."
     },
     {
-        id: 6,
-        src: "https://pierre-gassin.com/wp-content/uploads/2019/12/Tabarka-Fort-Génois-et-Aiguilles-scaled.jpg",
+        src: "https://images.pexels.com/photos/4132936/pexels-photo-4132936.png",
         alt: 'Korba passmenterie',
         title: "First slide label",
         description: "Nulla vitae elit libero, a pharetra augue mollis interdum."
     },
-    {
-        id: 7,
-        src: "https://pierre-gassin.com/wp-content/uploads/2019/12/Tozeur-Briquetterie-20-scaled.jpg",
-        alt: 'Korba passmenterie',
-        title: "First slide label",
-        description: "Nulla vitae elit libero, a pharetra augue mollis interdum."
-    },
-    {
-        id: 8,
-        src: "https://pierre-gassin.com/wp-content/uploads/2019/07/Korba-Passementerie-scaled.jpg",
-        alt: 'Korba passmenterie',
-        title: "First slide label",
-        description: "Nulla vitae elit libero, a pharetra augue mollis interdum."
-    },
-    {
-        id: 9,
-        src: "https://pierre-gassin.com/wp-content/uploads/2019/12/Tozeur-Briquetterie-20-scaled.jpg",
-        alt: 'Korba passmenterie',
-        title: "First slide label",
-        description: "Nulla vitae elit libero, a pharetra augue mollis interdum."
-    },
-    {
-        id: 10,
-        src: "https://pierre-gassin.com/wp-content/uploads/2019/12/Tabarka-Fort-Génois-et-Aiguilles-scaled.jpg",
-        alt: 'Korba passmenterie',
-        title: "First slide label",
-        description: "Nulla vitae elit libero, a pharetra augue mollis interdum."
-    },
-    {
-        id: 11,
-        src: "https://pierre-gassin.com/wp-content/uploads/2019/12/Tozeur-Briquetterie-20-scaled.jpg",
-        alt: 'Korba passmenterie',
-        title: "First slide label",
-        description: "Nulla vitae elit libero, a pharetra augue mollis interdum."
-    },
-]
+].map((e, i) => {
+    return { ...e, id: i }
+})

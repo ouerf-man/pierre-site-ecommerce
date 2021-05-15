@@ -7,23 +7,35 @@ import { useEffect, useState } from 'react'
 
 const carouselPics = [
   {
-    src: "https://pierre-gassin.com/wp-content/uploads/2019/07/Korba-Passementerie-scaled.jpg",
+    src: "https://images.pexels.com/photos/4126684/pexels-photo-4126684.jpeg",
     alt: 'Korba passmenterie',
     title: "First slide label",
     description: "Nulla vitae elit libero, a pharetra augue mollis interdum."
   },
   {
-    src: "https://pierre-gassin.com/wp-content/uploads/2019/12/Tozeur-Briquetterie-20-scaled.jpg",
+    src: "https://images.pexels.com/photos/3457273/pexels-photo-3457273.jpeg",
     alt: 'Korba passmenterie',
-    title: "Second slide label",
+    title: "First slide label",
     description: "Nulla vitae elit libero, a pharetra augue mollis interdum."
   },
   {
-    src: "https://pierre-gassin.com/wp-content/uploads/2019/12/Tabarka-Fort-Génois-et-Aiguilles-scaled.jpg",
+    src: "https://images.pexels.com/photos/2228561/pexels-photo-2228561.jpeg",
     alt: 'Korba passmenterie',
-    title: "Third slide label",
+    title: "First slide label",
     description: "Nulla vitae elit libero, a pharetra augue mollis interdum."
-  }
+  },
+  {
+    src: "https://images.pexels.com/photos/4626371/pexels-photo-4626371.jpeg",
+    alt: 'Korba passmenterie',
+    title: "First slide label",
+    description: "Nulla vitae elit libero, a pharetra augue mollis interdum."
+  },
+  {
+    src: "https://images.pexels.com/photos/3120864/pexels-photo-3120864.jpeg",
+    alt: 'Korba passmenterie',
+    title: "First slide label",
+    description: "Nulla vitae elit libero, a pharetra augue mollis interdum."
+  },
 ]
 
 export default function Home() {
@@ -54,11 +66,17 @@ export default function Home() {
           <span>Acquisition instantanée de droits de reproduction</span>
         </div>
 
-        <Carousel className="h-100">
+        <Carousel className="h-100 w-100">
           {
             carouselPics.map((e, i) => <Carousel.Item key={i} className="h-100 position-relative">
-              <div className='w-100' style={{ backgroundImage: `url(${e.src})`, backgroundSize: 'cover', backgroundPosition: 'center', height: '100vh' }}>
-              </div>
+              <Image
+                priority
+                src={e.src}
+                alt={e.alt}
+                layout='fill'
+                objectFit='cover'
+                objectPosition='50% 50%'
+              />
               <div className={styles.overlay}>
 
               </div>

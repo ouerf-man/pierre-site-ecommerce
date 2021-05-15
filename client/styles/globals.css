@@ -6,7 +6,7 @@ body {
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 }
 
-#__next{
+#__next {
   min-height: 100vh;
   overflow: hidden;
 }
@@ -21,32 +21,32 @@ a {
 }
 
 .carousel-indicators li {
-  background-color: red!important;
-  border-radius: 50%!important;
-  height: 10px!important;
-  width: 10px!important;
+  background-color: red !important;
+  border-radius: 50% !important;
+  height: 10px !important;
+  width: 10px !important;
 }
 
 .carousel-indicators li.active {
-  background-color: #fff!important;
-  border-radius: 50%!important;
-  height: 10px!important;
-  width: 10px!important;
+  background-color: #fff !important;
+  border-radius: 50% !important;
+  height: 10px !important;
+  width: 10px !important;
 }
 
 .sidenav {
   height: 100%;
   width: 0;
   position: fixed;
-  z-index: 999;
+  z-index: 9000;
   top: 0;
   right: 0;
   background-color: #ed1c24;
   overflow-x: hidden;
   transition: 0.5s;
   padding-top: 60px;
-  transition-delay: .5;
-  font-size: 14px
+  transition-delay: 0.5;
+  font-size: 14px;
 }
 
 .sidenav a {
@@ -79,7 +79,7 @@ a {
   }
 }
 
-.left-title{
+.left-title {
   color: #8d8c8c;
   font-size: 45px;
   text-align: center;
@@ -87,7 +87,22 @@ a {
   font-weight: bold;
 }
 
-.left-panel{
+.left-paragraph {
+  color: #fff;
+  opacity: 0.4;
+  padding: 0px 2%;
+  letter-spacing: 1px;
+  margin-top: 50px;
+  font-size: 13px;
+  text-align: center;
+  transition-duration: 1s;
+}
+
+.left-paragraph:hover {
+  opacity: 1;
+}
+
+.left-panel {
   background-color: #1c1c1c;
   height: 100vh;
   letter-spacing: 5px;
@@ -95,29 +110,50 @@ a {
   width: 33.333%;
 }
 
-.modal-dialog-reportage{
-  max-width: 100%!important;
-  margin: 0px!important;
-  background-color: #000!important;
+.modal-dialog-reportage {
+  max-width: 100% !important;
+  margin: 0px !important;
+  background-color: #000 !important;
 }
 
-.modal-dialog-reportage .modal-header{
-  padding: 0!important;
+.modal-dialog-reportage .modal-header {
+  padding: 0 !important;
 }
 
-.modal-dialog-reportage .modal-content{
-  background-color: #1c1c1c!important;
+.modal-dialog-reportage .modal-content {
+  background-color: #1c1c1c !important;
 }
 
-.modal-dialog-reportage .reportage-modal-image-container{
+.modal-dialog-reportage .reportage-modal-image-container {
   height: 100vh;
   display: inline-block;
 }
 
-.modal-dialog-reportage .active{
-  display: flex!important;
+.modal-dialog-reportage .active {
+  display: flex !important;
 }
 
-.modal-dialog-reportage input{
+.modal-dialog-reportage input {
   z-index: 20000;
+}
+
+@media screen and (max-width:767px) {
+  .left-panel {
+    height: 20vh;
+    letter-spacing: 5px;
+    position: fixed;
+    width: 100%;
+  }
+
+  .left-panel-parent{
+    height: 20vh;
+  }
+}
+
+.carousel-inner{
+  height: 100%;
+}
+
+.carousel-indicators,.carousel-control-prev,.carousel-control-next{
+  z-index: 50;
 }

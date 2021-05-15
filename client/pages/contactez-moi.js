@@ -9,22 +9,22 @@ export default function About() {
                 </div>
             </div>
             <div className={`${styles.right} col`}>
-                <form>
+                <form className="text-center">
                     <div className="form-group">
                         <label for="name">Nom complet <small>(Requis)</small></label>
-                        <input type="text" className="form-control d-block" id="name" required />
+                        <input type="text" className="form-control d-block w-100" id="name" required />
                     </div>
                     <div className="form-group">
                         <label for="email">Email address <small>(Requis)</small></label>
-                        <input type="email" className="form-control d-block" id="email" placeholder="name@example.com"  required />
+                        <input type="email" className="form-control d-block w-100" id="email" placeholder="name@example.com"  required />
                     </div>
                     <div className="form-group">
                         <label for="sujet">Sujet <small>(Requis)</small></label>
-                        <input type="text" className="form-control d-block" id="sujet" required />
+                        <input type="text" className="form-control d-block w-100" id="sujet" required />
                     </div>
                     <div className="form-group">
                         <label for="message">Message</label>
-                        <textarea id="message" className="d-block" rows="3"></textarea>
+                        <textarea id="message" className="d-block w-100" rows="3"></textarea>
                     </div>
                     <input type="button" value="Envoi" />
                 </form>
