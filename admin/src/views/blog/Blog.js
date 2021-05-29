@@ -2,8 +2,8 @@ import React, {useState, useEffect} from 'react'
 import { CCard, CCardBody, CCardHeader, CCol, CRow } from '@coreui/react'
 
 
-/* import { getStudentById } from "../../services/api.service"; */
-
+/* import { getStudentById } from "../../services/api.service";
+ */
 
 const User = ({match}) => {
   const [studentDetail, setStudentDetail] = useState(null);

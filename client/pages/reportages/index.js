@@ -2,53 +2,9 @@ import Head from 'next/head'
 import Link from "next/link"
 import Image from 'next/image'
 import styles from '../../styles/Reportage.module.css'
-
-export default function Home() {
-    const reportages = [
-        {
-            src: "https://images.pexels.com/photos/4126684/pexels-photo-4126684.jpeg",
-            alt: 'Korba passmenterie',
-            title: "First slide label",
-            description: "Nulla vitae elit libero, a pharetra augue mollis interdum."
-        },
-        {
-            src: "https://images.pexels.com/photos/3457273/pexels-photo-3457273.jpeg",
-            alt: 'Korba passmenterie',
-            title: "First slide label",
-            description: "Nulla vitae elit libero, a pharetra augue mollis interdum."
-        },
-        {
-            src: "https://images.pexels.com/photos/2228561/pexels-photo-2228561.jpeg",
-            alt: 'Korba passmenterie',
-            title: "First slide label",
-            description: "Nulla vitae elit libero, a pharetra augue mollis interdum."
-        },
-        {
-            src: "https://images.pexels.com/photos/4626371/pexels-photo-4626371.jpeg",
-            alt: 'Korba passmenterie',
-            title: "First slide label",
-            description: "Nulla vitae elit libero, a pharetra augue mollis interdum."
-        },
-        {
-            src: "https://images.pexels.com/photos/3120864/pexels-photo-3120864.jpeg",
-            alt: 'Korba passmenterie',
-            title: "First slide label",
-            description: "Nulla vitae elit libero, a pharetra augue mollis interdum."
-        },
-        {
-            src: "https://images.pexels.com/photos/2228560/pexels-photo-2228560.jpeg",
-            alt: 'Korba passmenterie',
-            title: "First slide label",
-            description: "Nulla vitae elit libero, a pharetra augue mollis interdum."
-        },
-        {
-            src: "https://images.pexels.com/photos/4132936/pexels-photo-4132936.png",
-            alt: 'Korba passmenterie',
-            title: "First slide label",
-            description: "Nulla vitae elit libero, a pharetra augue mollis interdum."
-        },
-    ]
-
+import { getReportages } from "../../src/services/api.reportage.service"
+export default function Home(props) {
+    const reportages = props.reportages
 
     return (
         <>
@@ -68,9 +24,9 @@ export default function Home() {
                 <div className="col col-xs-12 row justify-content-around align-items-stretch pr-0 overflow-hidden">
                     {
                         reportages.map((e, i) =>
-                            <Link href={`/reportages/${e.title.toLocaleLowerCase().split(" ").join('-')}`} key={i}>
+                            <Link href={`/reportages/${e.slug}`} key={i}>
                                 <div className={`col-xs-5 col-md-4 px-0 ${styles.reportageItem} h-auto`}>
-                                    <Image src={e.src} alt={e.alt} layout="fill" objectFit="cover"/>
+                                    <Image src={e.cover} alt={e.title} layout="fill" objectFit="cover" />
                                     <div className={`${styles.overlay}`}>
                                         <h2>
                                             {e.title}
@@ -88,4 +44,13 @@ export default function Home() {
             </main>
         </>
     )
+}
+
+export async function getServerSideProps(context) {
+    const result = await getReportages()
+    return {
+        props: {
+            reportages: result.success ? result.data : []
+        }, // will be passed to the page component as props
+    }
 }

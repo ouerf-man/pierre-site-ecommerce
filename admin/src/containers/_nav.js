@@ -22,6 +22,12 @@ const _nav = [
     to: "/reportages",
     icon: "cil-user",
   },
+  {
+    _tag: "CSidebarNavItem",
+    name: "blogs",
+    to: "/blogs",
+    icon: "cil-user",
+  },
   /*{
     _tag: 'CSidebarNavItem',
     name: 'Typography',

@@ -1,9 +1,9 @@
 import axios from 'axios';
 
-const api = "http://localhost:3000/api/v1"
+const api = "http://localhost:8080"
 
-export const addStudent = (body) => {
-    return axios.post(`${api}/student`, body)
+export const addReportage = (body) => {
+    return axios.post(`${api}/reportage`, body)
         .then(res => {
             if (res.status === 200) {
                 return res.data || null;
@@ -17,8 +17,8 @@ export const addStudent = (body) => {
         });
 }
 
-export const uploadStudentExcel = (file) => {
-    return axios.post(`${api}/student/upload`, file)
+export const getReportages = () => {
+    return axios.get(`${api}/reportage`)
         .then(res => {
             if (res.status === 200) {
                 return res.data || null;
@@ -32,9 +32,8 @@ export const uploadStudentExcel = (file) => {
         });
 }
 
-
-export const allStudents = () => {
-    return axios.get(`${api}/student`)
+export const getReportage = (id) => {
+    return axios.get(`${api}/reportage/id/${id}`)
         .then(res => {
             if (res.status === 200) {
                 return res.data || null;
@@ -48,8 +47,8 @@ export const allStudents = () => {
         });
 }
 
-export const getStudentById = (id) => {
-    return axios.get(`${api}/student/${id}`)
+export const addPhoto = (id, body) => {
+    return axios.post(`${api}/reportage/${id}/image`, body)
         .then(res => {
             if (res.status === 200) {
                 return res.data || null;
@@ -63,8 +62,8 @@ export const getStudentById = (id) => {
         });
 }
 
-export const allClasses = () => {
-    return axios.get(`${api}/class`)
+export const addBlog = (body) => {
+    return axios.post(`${api}/blog`, body)
         .then(res => {
             if (res.status === 200) {
                 return res.data || null;
@@ -78,8 +77,15 @@ export const allClasses = () => {
         });
 }
 
-export const addClass = (body) => {
-    return axios.post(`${api}/class`, body)
+export const addBlogBanner = (body) => {
+    return axios.post(`${api}/blog/image`)
+        .then(res => {
+            return res.data
+        })
+}
+
+export const getBlogs = () => {
+    return axios.get(`${api}/blog`)
         .then(res => {
             if (res.status === 200) {
                 return res.data || null;
@@ -93,53 +99,8 @@ export const addClass = (body) => {
         });
 }
 
-export const editClass = (id, body) => {
-    return axios.patch(`${api}/class/${id}`, body)
-        .then(res => {
-            if (res.status === 200) {
-                return res.data || null;
-            } else {
-                return null
-            }
-        })
-        .catch(err => {
-            console.log(err);
-            return null;
-        });
-}
-
-export const getClassById = (id) => {
-    return axios.get(`${api}/class/${id}`)
-        .then(res => {
-            if (res.status === 200) {
-                return res.data || null;
-            } else {
-                return null
-            }
-        })
-        .catch(err => {
-            console.log(err);
-            return null;
-        });
-}
-
-export const addActualite = (body) => {
-    return axios.post(`${api}/news`, body)
-        .then(res => {
-            if (res.status === 200) {
-                return res.data || null;
-            } else {
-                return null
-            }
-        })
-        .catch(err => {
-            console.log(err);
-            return null;
-        });
-}
-
-export const getActualite = () => {
-    return axios.get(`${api}/news`)
+export const getBlog = (id) => {
+    return axios.get(`${api}/blog/${id}`)
         .then(res => {
             if (res.status === 200) {
                 return res.data || null;

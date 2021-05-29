@@ -56,7 +56,7 @@ exports.signUp = async (req, res, next) => {
         })
 
         if (account) {
-            res.status(201).json({
+            res.status(200).json({
                 success: true,
                 message: "Successfully created!"
             })

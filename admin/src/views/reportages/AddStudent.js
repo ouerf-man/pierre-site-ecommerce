@@ -15,7 +15,7 @@ import {
 
 import { useHistory } from "react-router-dom";
 
-import { addStudent } from "../../services/api.service";
+import * as apiService from "../../services/api.service";
 
 
 
@@ -25,37 +25,64 @@ import { addStudent } from "../../services/api.service";
 const AddStudent = (props) => {
 
   const history = useHistory();
+  const [reportageSlug, setReportageSlug] = useState(null)
   const [titre, setTitre] = useState("");
   const [description, setDescription] = useState("");
   const [previewImages, setPreviewImages] = useState([])
   const [files, setFiles] = useState([])
+
+  React.useEffect(async () => {
+    if (props.match.params.id) {
+      setReportageSlug(props.match.params.id)
+      const reportage = await apiService.getReportage(props.match.params.id)
+      console.log(reportage)
+      setTitre(reportage.data.title)
+      setDescription(reportage.data.description)
+      setPreviewImages(reportage.data.images.map(e=>([e.tagged,e.size1,e.size2,e.size3])))
+    }
+  }, [])
+
   const handleFileChange = (e, i) => {
     const aux = [...files]
     aux[i] = e.target.files[0]
     setFiles(aux)
   }
 
-  const handleFilesUpload = () => {
+  const handleFilesUpload = async () => {
+    if (files.length != 4) {
+      alert('4 files required')
+      return
+    }
     const preview = [...previewImages]
     preview.push(files.map(e => URL.createObjectURL(e)))
     setPreviewImages(preview)
+    const fd = new FormData()
+    fd.append('tagged', files[0])
+    fd.append('size1', files[1])
+    fd.append('size2', files[2])
+    fd.append('size3', files[3])
+    console.log(fd)
+    await apiService.addPhoto(props.match.params.id, fd)
     setFiles([])
   }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    history.push("/create-reportage/" + "qsd538a46qs1d35")
 
-    /*if (!titre || !description)
+
+    if (!titre || !description)
       alert("missing fields");
 
     const body = {
-      titre,
+      title: titre,
       description,
     }
-    const result = await addStudent(body);
-    console.log(result);
-    history.push("/students");*/
+    const result = await apiService.addReportage(body);
+    if (result.success)
+      history.push("/create-reportage/" + result.data)
+    else {
+      alert(result.message)
+    }
   }
 
 

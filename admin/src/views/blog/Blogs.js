@@ -13,7 +13,7 @@ import {
 } from '@coreui/react'
 
 import { useRef } from 'react'
-import { getReportages } from 'src/services/api.service'
+import { getBlogs } from 'src/services/api.service'
 import { useToasts } from "react-toast-notifications"
 const getBadge = status => {
   switch (status) {
@@ -29,7 +29,6 @@ const Users = () => {
   const history = useHistory()
   const queryPage = useLocation().search.match(/page=([0-9]+)/, '')
   const currentPage = Number(queryPage && queryPage[1] ? queryPage[1] : 1)
-  const [reportages, setReportages] = useState(null);
   const [page, setPage] = useState(currentPage)
   const { addToast } = useToasts()
   const fileInput = useRef(null);
@@ -38,16 +37,12 @@ const Users = () => {
     currentPage !== newPage && history.push(`/students?page=${newPage}`)
   }
 
+  const [blogs, setBlogs] = useState([])
 
-  const getAllReportages = async () => {
-    const result = await getReportages();
-    setReportages(result.data);
+  const getBlogs = async ()=>{
+    const result = await getBlogs()
+    setBlogs(result.data)
   }
-
-
-  useEffect(() => {
-    getAllReportages();
-  }, [])
 
   useEffect(() => {
     currentPage !== page && setPage(currentPage)
@@ -58,24 +53,24 @@ const Users = () => {
       <CCol xl={12}>
         <CCard>
           <CCardHeader>
-            Reportages
-            <CButton color="success" size="sm" className="ml-5" onClick={() => history.push("/create-reportage")}>
-              Ajouter un reportage
+            Blogs
+            <CButton color="success" size="sm" className="ml-5" onClick={() => history.push("/create-blog")}>
+              Ajouter un blog
             </CButton>
           </CCardHeader>
           <CCardBody>
             <CDataTable
-              items={reportages}
+              items={blogs}
               fields={[
                 { key: 'slug', _classes: 'font-weight-bold' },
-                'title', 'description'
+                'title'
               ]}
               hover
               striped
               itemsPerPage={5}
               activePage={page}
               clickableRows
-              onRowClick={(item) => history.push(`/create-reportage/${item._id}`)}
+              onRowClick={(item) => history.push(`/create-blog/${item.id}`)}
               scopedSlots={{
                 'status':
                   (item) => (

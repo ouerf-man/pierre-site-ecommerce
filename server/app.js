@@ -9,6 +9,8 @@ const cors = require('cors');
 const dbService = require('./configs/db.service');
 
 const userRouter = require('./routes/user')
+const reportageRouter = require('./routes/reportage')
+const blogRouter = require('./routes/blog')
 
 const { renderFile } = require('jade');
 const app = express();
@@ -17,13 +19,13 @@ app.use(cors());
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
+app.set('view engine', renderFile);
 
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'static')));
 // Passport middleware
 app.use(passport.initialize());
 // Passport config
@@ -35,6 +37,8 @@ app.use('/health',function(req,res){
   res.send('health 100%')
 })
 app.use("/user",userRouter)
+app.use("/reportage",reportageRouter)
+app.use("/blog",blogRouter)
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

@@ -62,9 +62,9 @@ export default function Home() {
             height='auto'
           />
         </div>
-        <div className={styles.aboutLink}>
+        {/* <div className={styles.aboutLink}>
           <span>Acquisition instantanée de droits de reproduction</span>
-        </div>
+        </div> */}
 
         <Carousel className="h-100 w-100">
           {
