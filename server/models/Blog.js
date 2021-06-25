@@ -4,17 +4,21 @@ const Schema = mongoose.Schema;
 
 // Create Schema
 const BlogSchema = new Schema({
-    title:{
+    title: {
         type: String,
         required: true,
     },
-    slug : {
+    slug: {
         type: String
     },
-    description : {
+    description: {
         type: String,
     },
-    cover : String,
+    cover: String,
+    publish: {
+        type: Boolean,
+        default: true
+    }
 }, { timestamps: true });
 
 

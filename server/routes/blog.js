@@ -7,6 +7,8 @@ const imageUpload = require('../middlewares/blog-upload')
 router.route('').post(blogService.addBlog)
     .get(blogService.getAll)
 router.route('/:id').get(blogService.getById)
+    .put(blogService.updateOne)
+    .delete(blogService.deleteOne)
 router.route('/slug/:id').get(blogService.getById)
 
 router.route('/image').post(imageUpload.single('cover'), function (req, res, next) {
@@ -23,7 +25,7 @@ router.route('/image').post(imageUpload.single('cover'), function (req, res, nex
         return
     } */
     res.json({
-        url: req.file? req.protocol + "://" + req.get("host") + "/assets/blog/" + req.file.filename : ''
+        url: req.file ? req.protocol + "://" + req.get("host") + "/assets/blog/" + req.file.filename : ''
     })
 })
 module.exports = router;

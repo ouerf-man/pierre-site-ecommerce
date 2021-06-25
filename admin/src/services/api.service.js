@@ -78,7 +78,7 @@ export const addBlog = (body) => {
 }
 
 export const addBlogBanner = (body) => {
-    return axios.post(`${api}/blog/image`)
+    return axios.post(`${api}/blog/image`,body)
         .then(res => {
             return res.data
         })
@@ -101,6 +101,36 @@ export const getBlogs = () => {
 
 export const getBlog = (id) => {
     return axios.get(`${api}/blog/${id}`)
+        .then(res => {
+            if (res.status === 200) {
+                return res.data || null;
+            } else {
+                return null
+            }
+        })
+        .catch(err => {
+            console.log(err);
+            return null;
+        });
+}
+
+export const updateBlog = (id,body) => {
+    return axios.put(`${api}/blog/${id}`,body)
+        .then(res => {
+            if (res.status === 200) {
+                return res.data || null;
+            } else {
+                return null
+            }
+        })
+        .catch(err => {
+            console.log(err);
+            return null;
+        });
+}
+
+export const deleteBlog = (id) => {
+    return axios.delete(`${api}/blog/${id}`)
         .then(res => {
             if (res.status === 200) {
                 return res.data || null;

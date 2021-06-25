@@ -13,7 +13,7 @@ import {
 } from '@coreui/react'
 
 import { useRef } from 'react'
-import { getBlogs } from 'src/services/api.service'
+import { deleteBlog, getBlogs } from 'src/services/api.service'
 import { useToasts } from "react-toast-notifications"
 const getBadge = status => {
   switch (status) {
@@ -30,8 +30,8 @@ const Users = () => {
   const queryPage = useLocation().search.match(/page=([0-9]+)/, '')
   const currentPage = Number(queryPage && queryPage[1] ? queryPage[1] : 1)
   const [page, setPage] = useState(currentPage)
-  const { addToast } = useToasts()
-  const fileInput = useRef(null);
+
+  const [supprimer, setDelete] = useState(false)
 
   const pageChange = newPage => {
     currentPage !== newPage && history.push(`/students?page=${newPage}`)
@@ -39,10 +39,21 @@ const Users = () => {
 
   const [blogs, setBlogs] = useState([])
 
-  const getBlogs = async ()=>{
+  const getBlogsEffect = async () => {
     const result = await getBlogs()
     setBlogs(result.data)
   }
+
+  const handleDelete = async (id) => {
+    const result = await deleteBlog(id)
+    if (result.success)
+      setDelete(false)
+    else alert(result.message)
+  }
+
+  useEffect(() => {
+    getBlogsEffect()
+  }, [])
 
   useEffect(() => {
     currentPage !== page && setPage(currentPage)
@@ -63,23 +74,56 @@ const Users = () => {
               items={blogs}
               fields={[
                 { key: 'slug', _classes: 'font-weight-bold' },
-                'title'
+                'title',
+                {
+                  key: 'Supprimer',
+                  label: 'Actions',
+                  sorter: false,
+                  filter: false
+                }
               ]}
               hover
               striped
               itemsPerPage={5}
               activePage={page}
-              clickableRows
-              onRowClick={(item) => history.push(`/create-blog/${item.id}`)}
               scopedSlots={{
-                'status':
-                  (item) => (
+                'Supprimer': (item, index) => {
+                  return (
                     <td>
-                      <CBadge color={getBadge(item.status)}>
-                        {item.status}
-                      </CBadge>
+                      {
+                        supprimer ?
+                          <CButton
+                            color="danger"
+                            variant="outline"
+                            shape="square"
+                            size="sm"
+                            onClick={() => { handleDelete(item._id) }}
+                          >
+                            Veuillez confirmer
+                          </CButton>
+                          :
+                          <CButton
+                            color="danger"
+                            variant="outline"
+                            shape="square"
+                            size="sm"
+                            onClick={() => { setDelete(true) }}
+                          >
+                            Supprimer
+                          </CButton>
+                      }
+                      <CButton
+                        color="primary"
+                        variant="outline"
+                        shape="square"
+                        size="sm"
+                        onClick={(item) => history.push(`/create-blog/${item._id}`)}
+                      >
+                        Mise à jour
+                      </CButton>
                     </td>
                   )
+                }
               }}
             />
             <CPagination

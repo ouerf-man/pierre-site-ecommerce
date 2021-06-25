@@ -20,7 +20,7 @@ function Navbar() {
     const [navWidth, setNavWidth] = useState(0)
     const [buttonTop, setButtonTop] = useState(10)
     const openNav = () => {
-        setNavWidth(180)
+        setNavWidth(150)
         setButtonTop(-50)
     }
 

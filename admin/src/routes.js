@@ -20,9 +20,9 @@ const routes = [
   { path: "/reportages/:id", exact: true, name: "information du reportage", component: Reportage, },
 
   { path: "/blogs", exact: true, name: "Les blogs", component: Blogs },
-  { path: "/create-blog", exact: true, name: "information du reportage", component: AddBlog, },
-  { path: "/create-blog/:id", exact: true, name: "information du reportage", component: AddBlog, },
-  { path: "/blog/:id", exact: true, name: "information du reportage", component: Blog, },
+  { path: "/create-blog/:id", exact: true, name: "information du blog", component: AddBlog, },
+  { path: "/create-blog", exact: true, name: "Créer un blog", component: AddBlog, },
+  { path: "/blog/:id", exact: true, name: "information du blog", component: Blog, },
 ];
 
 export default routes;

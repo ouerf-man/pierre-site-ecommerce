@@ -15,7 +15,7 @@ import {
 
 import { useHistory } from "react-router-dom";
 
-import { addBlog, addBlogBanner, getBlog } from "../../services/api.service";
+import { addBlog, addBlogBanner, getBlog, updateBlog } from "../../services/api.service";
 
 
 
@@ -29,6 +29,7 @@ const AddStudent = (props) => {
   const [description, setDescription] = useState("");
   const [file, setFile] = useState(null)
   const [preview, setPreview] = useState(null)
+  const [blog, setBlog] = useState(null)
   const handleFileChange = (e) => {
     const aux = e.target.files[0]
     setFile(aux)
@@ -40,14 +41,18 @@ const AddStudent = (props) => {
 
     if (!titre || !description)
       alert("missing fields");
-    let imageUrl = ''
-    try {
-      const fd = new FormData()
-      fd.append('cover', file)
-      const res = await addBlogBanner(fd)
-      imageUrl = res.url
-    } catch (e) {
-      console.log(e.message)
+    let imageUrl
+    if (file)
+      try {
+        const fd = new FormData()
+        fd.append('cover', file)
+        const res = await addBlogBanner(fd)
+        imageUrl = res.url
+      } catch (e) {
+        console.log(e.message)
+      }
+    else{
+      imageUrl = blog?.cover
     }
     const body = {
       title: titre,
@@ -55,8 +60,13 @@ const AddStudent = (props) => {
       cover: imageUrl
     }
     try {
-      const result = await addBlog(body);
-      history.push("/create-blog/" + result.data);
+      if (props.match.params.id) {
+        const result = await updateBlog(props.match.params.id, body)
+        history.push("/blogs")
+      } else {
+        const result = await addBlog(body);
+        history.push("/create-blog/" + result.data);
+      }
     } catch (e) {
       console.log(e)
     }
@@ -65,6 +75,7 @@ const AddStudent = (props) => {
   useEffect(() => {
     if (props.match.params.id) {
       getBlog(props.match.params.id).then(res => {
+        setBlog(res.data)
         setTitre(res.data.title)
         setDescription(res.data.description)
         setPreview(res.data.cover)
@@ -87,7 +98,7 @@ const AddStudent = (props) => {
                 autoComplete="titre"
                 onChange={(e) => handleFileChange(e)}
               />
-              {file && <img src={preview} />}
+              {preview && <img src={preview} />}
             </CFormGroup>
             <CFormGroup>
               <CLabel htmlFor="titre">Titre</CLabel>

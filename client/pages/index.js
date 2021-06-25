@@ -66,7 +66,7 @@ export default function Home() {
           <span>Acquisition instantanée de droits de reproduction</span>
         </div> */}
 
-        <Carousel className="h-100 w-100">
+        <Carousel className="h-100 w-100" indicators={false}>
           {
             carouselPics.map((e, i) => <Carousel.Item key={i} className="h-100 position-relative">
               <Image

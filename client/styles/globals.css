@@ -52,7 +52,7 @@ a {
 .sidenav a {
   padding: 8px 8px 8px 32px;
   text-decoration: none;
-  font-size: 18px;
+  font-size: 15px;
   color: #fff;
   display: block;
   transition: 0.3s;
@@ -137,7 +137,13 @@ a {
   z-index: 20000;
 }
 
-@media screen and (max-width:767px) {
+.payment-modal .modal-body{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+@media screen and (max-width: 767px) {
   .left-panel {
     height: 20vh;
     letter-spacing: 5px;
@@ -145,15 +151,21 @@ a {
     width: 100%;
   }
 
-  .left-panel-parent{
+  .left-panel-parent {
     height: 20vh;
   }
 }
 
-.carousel-inner{
+.carousel-inner {
   height: 100%;
 }
 
-.carousel-indicators,.carousel-control-prev,.carousel-control-next{
+.carousel-indicators,
+.carousel-control-prev,
+.carousel-control-next {
   z-index: 50;
+}
+
+main{
+  min-height: 100vh;
 }

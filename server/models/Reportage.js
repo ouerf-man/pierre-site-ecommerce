@@ -15,6 +15,10 @@ const ReportageSchema = new Schema({
         type: String,
     },
     cover : String,
+    publish: {
+        type: Boolean,
+        default: true
+    }
 }, { timestamps: true });
 
 
