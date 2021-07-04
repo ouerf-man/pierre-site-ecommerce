@@ -16,7 +16,7 @@ export default function About() {
                     </div>
                     <div className="form-group">
                         <label for="email">Email address <small>(Requis)</small></label>
-                        <input type="email" className="form-control d-block w-100" id="email" placeholder="name@example.com"  required />
+                        <input type="email" className="form-control d-block w-100" id="email" placeholder="nom@exemple.com"  required />
                     </div>
                     <div className="form-group">
                         <label for="sujet">Sujet <small>(Requis)</small></label>

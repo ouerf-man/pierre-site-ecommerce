@@ -1,20 +1,30 @@
-import React from "react";
+import React, { useState } from "react";
 import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
-
-export const CheckoutForm = () => {
+import * as api from "../../services/api.account.service"
+import { connect } from "react-redux"
+const CheckoutFormCard = ({ images, ammount, user }) => {
     const stripe = useStripe();
     const elements = useElements();
 
     const handleSubmit = async (event) => {
         event.preventDefault();
+        setProcessingTo(true)
         const { error, paymentMethod } = await stripe.createPaymentMethod({
             type: "card",
             card: elements.getElement(CardElement),
         });
 
         if (!error) {
-            console.log("Stripe 23 | token generated!", paymentMethod);
-            //send token to backend here
+            try {
+                const { id } = paymentMethod;
+                const res = await api.charge({ amount: ammount, id, images, account: user.id })
+
+                if (res.success) {
+                    alert(res.message)
+                }
+            } catch (error) {
+                alert(error.response.message)
+            }
         } else {
             console.log(error.message);
         }
@@ -37,17 +47,36 @@ export const CheckoutForm = () => {
             }
         }
     }
+    const [formData, setFormData] = useState({})
+    const [precessing, setProcessingTo] = useState(false)
+    /* const [errors, setErrors] = useState({
+        nom: false,
+        email: false,
+        ville: false,
+        adresse: false,
+        gouvernorat: false,
+        zip: false,
+    }) */
+    const handleInputChange = (e) => {
+        const aux = { ...formData }
+        const name = e.target.name
+        const value = e.target.value
+
+        aux[name] = value
+
+        setFormData(aux)
+    }
 
     return (
         <form onSubmit={handleSubmit} className="mx-auto">
             <div className="d-flex justify-content-center">
                 <div className="row justify-content-center">
-                    <input type="text" id="nom" name="nom" placeholder="Nom et prenom" />
-                    <input type="text" id="email" name="email" placeholder="Email" />
-                    <input type="text" id="ville" name="ville" placeholder="Ville" />
-                    <input type="text" id="adresse" name="adresse" placeholder="Adresse" />
-                    <input type="text" id="gouvernorat" name="gouvernorat" placeholder="Gouvernorat" />
-                    <input type="text" id="zip" name="zip" placeholder="Code postal" />
+                    <input type="text" id="nom" name="nom" value={`${user.last_name} ${user.first_name}`} required placeholder="Nom et prenom" onChange={handleInputChange} />
+                    <input type="email" id="email" name="email" value={user.email} required placeholder="Email" onChange={handleInputChange} />
+                    <input type="text" id="ville" name="ville" required placeholder="Ville" onChange={handleInputChange} />
+                    <input type="text" id="adresse" name="adresse" value={user.adress} required placeholder="Adresse" onChange={handleInputChange} />
+                    <input type="text" id="gouvernorat" name="gouvernorat" required placeholder="Gouvernorat" onChange={handleInputChange} />
+                    <input type="text" id="zip" name="zip" required value={user.zip} placeholder="Code postal" onChange={handleInputChange} />
                     <div style={CardContainerStyle}>
                         <CardElement options={cardElementOptions} className={"stipe-form"} />
                     </div>
@@ -65,5 +94,12 @@ const CardContainerStyle = {
     borderRadius: "5px 5px 5px 5px",
     width: '85%',
     margin: "5px",
-    marginTop:"40px"
+    marginTop: "40px"
 }
+
+const mapStateToProps = state => ({
+    isLoggedIn: state.auth.isLoggedIn,
+    user: state.auth.user
+});
+
+export const CheckoutForm = connect(mapStateToProps)(CheckoutFormCard)

@@ -2,6 +2,9 @@ import App from "next/app";
 
 import Navbar from '../src/components/Navbar'
 
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 import { initStore } from "../src/state/store";
 import { Provider } from "react-redux";
 import withRedux from "next-redux-wrapper";
@@ -15,6 +18,16 @@ function MyApp({ Component, pageProps, store }) {
     <Provider store={store}>
       <Navbar />
       <Component {...pageProps} />
+      <ToastContainer
+        position="bottom-right"
+        autoClose={8000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        draggable={false}
+        pauseOnVisibilityChange
+        closeOnClick
+        pauseOnHover
+      />
     </Provider>
   );
 }

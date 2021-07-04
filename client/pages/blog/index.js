@@ -3,53 +3,9 @@ import Link from "next/link"
 import Image from 'next/image'
 import styles from '../../styles/Blog.module.css'
 
-export default function Home() {
-    const reportages = [
-        {
-            src: "https://images.pexels.com/photos/4626371/pexels-photo-4626371.jpeg",
-            alt: 'Korba passmenterie',
-            title: "First slide label",
-            description: "Nulla vitae elit libero, a pharetra augue mollis interdum.Nulla vitae elit libero, a pharetra augue mollis interdum.Nulla vitae elit libero, a pharetra augue mollis interdum.Nulla vitae elit libero, a pharetra augue mollis interdum.Nulla vitae elit libero, a pharetra augue mollis interdum.Nulla vitae elit libero, a pharetra augue mollis interdum.Nulla vitae elit libero, a pharetra augue mollis interdum. Nulla vitae elit libero, a pharetra augue mollis interdum. Nulla vitae elit libero, a pharetra augue mollis interdum. Nulla vitae elit libero, a pharetra augue mollis interdum."
-        },
-        {
-            src: "https://images.pexels.com/photos/3457273/pexels-photo-3457273.jpeg",
-            alt: 'Korba passmenterie',
-            title: "First slide label",
-            description: "Nulla vitae elit libero, a pharetra augue mollis interdum."
-        },
-        {
-            src: "https://images.pexels.com/photos/2228561/pexels-photo-2228561.jpeg",
-            alt: 'Korba passmenterie',
-            title: "First slide label",
-            description: "Nulla vitae elit libero, a pharetra augue mollis interdum."
-        },
-        {
-            src: "https://images.pexels.com/photos/4626371/pexels-photo-4626371.jpeg",
-            alt: 'Korba passmenterie',
-            title: "First slide label",
-            description: "Nulla vitae elit libero, a pharetra augue mollis interdum."
-        },
-        {
-            src: "https://images.pexels.com/photos/3120864/pexels-photo-3120864.jpeg",
-            alt: 'Korba passmenterie',
-            title: "First slide label",
-            description: "Nulla vitae elit libero, a pharetra augue mollis interdum."
-        },
-        {
-            src: "https://images.pexels.com/photos/2228560/pexels-photo-2228560.jpeg",
-            alt: 'Korba passmenterie',
-            title: "First slide label",
-            description: "Nulla vitae elit libero, a pharetra augue mollis interdum."
-        },
-        {
-            src: "https://images.pexels.com/photos/4132936/pexels-photo-4132936.png",
-            alt: 'Korba passmenterie',
-            title: "First slide label",
-            description: "Nulla vitae elit libero, a pharetra augue mollis interdum."
-        },
-    ]
+import { getBlogs } from "../../src/services/api.blog.service"
 
-
+export default function Home({blogs}) {
     return (
         <>
             <Head>
@@ -67,10 +23,10 @@ export default function Home() {
                 </div>
                 <div className="col mt-5 row justify-content-around align-items-stretch pr-0 overflow-hidden">
                     {
-                        reportages.map((e, i) =>
-                            <Link href={`/blog/${e.title.toLocaleLowerCase().split(" ").join('-')}`} key={i}>
+                        blogs.map((e, i) =>
+                            <Link href={`/blog/${e.slug}`} key={i}>
                                 <div className={`mb-3 px-0 ${styles.blogItem}`}>
-                                    <Image height={"120"} width="auto" src={e.src} alt={e.alt} className={styles.image} objectFit="cover" objectPosition="50% 50%" />
+                                    {e.cover && <Image height={"120"} width="auto" src={e.cover} alt={e.alt} className={styles.image} objectFit="cover" objectPosition="50% 50%" />}
                                     <h2>{e.title}</h2>
                                     <p>
                                         {e.description}
@@ -86,4 +42,15 @@ export default function Home() {
             </main>
         </>
     )
+}
+
+
+export async function getServerSideProps(context) {
+    const result = await getBlogs()
+    console.log(result)
+    return {
+        props: {
+            blogs: result.success ? result.data : []
+        }, // will be passed to the page component as props
+    }
 }

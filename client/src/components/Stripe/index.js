@@ -7,10 +7,10 @@ import { CheckoutForm } from "./CheckoutForm";
 const PUBLIC_KEY = "pk_test_51Ivkd8HduTYKpPVz7N319469jPMjOHSFAWgfCPCxzPW5ScYH60MoZohHLjJQLus91Ebe1Yti98SPZrO5uPcoxToS00i5T5VE6x";
 
 const stripeTestPromise = loadStripe(PUBLIC_KEY);
-const Stripe = () => {
+const Stripe = ({ammount,images}) => {
   return (
     <Elements stripe={stripeTestPromise} options={{locale:"fr"}}>
-      <CheckoutForm />
+      <CheckoutForm images={images} ammount={ammount} />
     </Elements>
   );
 };

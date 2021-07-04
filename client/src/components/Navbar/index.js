@@ -1,6 +1,8 @@
 import { useState } from "react";
 import Link from 'next/link'
+import { deAuthenticateAction } from "../../state/actions/actionCreator"
 
+import { connect } from "react-redux"
 const buttonStyle = {
     "fontSize": "19" + "px",
     "cursor": "pointer",
@@ -16,7 +18,7 @@ const buttonStyle = {
     tansitionProperty: "all"
 }
 
-function Navbar() {
+function Navbar(props) {
     const [navWidth, setNavWidth] = useState(0)
     const [buttonTop, setButtonTop] = useState(10)
     const openNav = () => {
@@ -33,16 +35,17 @@ function Navbar() {
     return (
         <>
 
-            <span style={{...buttonStyle, top: buttonTop}} onMouseOver={openNav} className='d-flex align-items-center justify-content-center'>&#9776;</span>
+            <span style={{ ...buttonStyle, top: buttonTop }} onMouseOver={openNav} className='d-flex align-items-center justify-content-center'>&#9776;</span>
             <div id="mySidenav" className="sidenav" onMouseLeave={closeNav} style={{ width: navWidth }}>
                 {/*<a className="closebtn" onClick={closeNav}>&times;</a>*/}
+                {props.isLoggedIn && <h6 className="text-white text-center">{props.user.last_name} {props.user.first_name}</h6>}
                 <Link href="/">
-                    <a>Acceuil</a>
+                    <a>Accueil</a>
                 </Link>
                 <Link href="/reportages">
                     <a>Reportages</a>
                 </Link>
-                <Link href="/login">
+                <Link href={props.isLoggedIn ? "espace-client" : "/login"}>
                     <a>Espace client</a>
                 </Link>
                 <Link href="/temoignage">
@@ -54,9 +57,25 @@ function Navbar() {
                 <Link href="/contactez-moi">
                     <a>Contact</a>
                 </Link>
+                {
+                    props.isLoggedIn &&
+                    <div className="d-flex justify-content-center">
+                        <button onClick={props.deAuthenticateAction} style={{ backgroundColor: '#fff', marginTop: 20, marginLeft: "auto", marginRight: 'auto' }}
+                            className="btn btn-white">
+                            Se déconnecter
+                        </button>
+                    </div>
+                }
             </div>
         </>
     )
 }
 
-export default Navbar;
+const mapStateToProps = state => ({
+    isLoggedIn: state.auth.isLoggedIn,
+    user: state.auth.user
+});
+const mapDispatchToProps = {
+    deAuthenticateAction: deAuthenticateAction,
+};
+export default connect(mapStateToProps, mapDispatchToProps)(Navbar);

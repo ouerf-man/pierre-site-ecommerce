@@ -22,7 +22,7 @@ exports.signUp = async (req, res, next) => {
     } = body
 
     if (!email || !password || !firstName || !lastName || !country) {
-        res.status(400).json({
+        res.status(200).json({
             success: false,
             message: "missing informations"
         })
@@ -31,7 +31,7 @@ exports.signUp = async (req, res, next) => {
 
     const foundAccount = await Account.findOne({ email });
     if (foundAccount) {
-        res.status(400).json({
+        res.status(200).json({
             success: false,
             message: 'Account already exists'
         })
@@ -58,7 +58,8 @@ exports.signUp = async (req, res, next) => {
         if (account) {
             res.status(200).json({
                 success: true,
-                message: "Successfully created!"
+                message: "Successfully created!",
+                data: { ...account.toJSON(), password: null }
             })
             return
         }
@@ -79,7 +80,7 @@ exports.login = async (req, res, next) => {
     } = req.body
 
     if ((!email && !username) || !password) {
-        res.status(400).json({
+        res.status(200).json({
             success: false,
             message: "missing informations"
         })
@@ -94,7 +95,7 @@ exports.login = async (req, res, next) => {
     }
 
     if (!foundAccount) {
-        res.status(404).json({
+        res.status(200).json({
             success: false,
             message: "User not found"
         })
@@ -135,7 +136,7 @@ exports.login = async (req, res, next) => {
             return
 
         } else {
-            res.status(400).json({
+            res.status(200).json({
                 success: false,
                 message: 'Invalid Credentials'
             });

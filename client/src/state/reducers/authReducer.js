@@ -22,7 +22,6 @@ if (typeof localStorage !== "undefined") {
    };
 }
 
-
 const authReducer = (state = initialState, action) => {
    switch (action.type) {
        case DEAUTHENTICATE:

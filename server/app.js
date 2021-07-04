@@ -11,6 +11,7 @@ const dbService = require('./configs/db.service');
 const userRouter = require('./routes/user')
 const reportageRouter = require('./routes/reportage')
 const blogRouter = require('./routes/blog')
+const paymentRouter = require('./routes/payment')
 
 const { renderFile } = require('jade');
 const app = express();
@@ -39,6 +40,7 @@ app.use('/health',function(req,res){
 app.use("/user",userRouter)
 app.use("/reportage",reportageRouter)
 app.use("/blog",blogRouter)
+app.use("/payment",paymentRouter)
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

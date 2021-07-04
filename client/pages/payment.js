@@ -1,10 +1,11 @@
 import Head from 'next/head'
 import Image from "next/image"
-import { useEffect, useState } from "react"
+import { useEffect, useState, useCallback } from "react"
 import styles from '../styles/Payment.module.css'
 import { useRouter } from 'next/router'
 import * as apiService from "../src/services/api.reportage.service"
 import StipeContainer from "../src/components/Stripe"
+import toast from "../src/components/Toast"
 import {
     Modal,
 } from "react-bootstrap"
@@ -35,12 +36,19 @@ const quoeff = {
 }
 
 export default function EspaceClient() {
+    const notify = useCallback((type, message) => {
+        toast({ type, message });
+      }, []);
+    
+      const dismiss = useCallback(() => {
+        toast.dismiss();
+      }, []);
     const [loading, setLoading] = useState(true)
     const [imagesObjects, setImages] = useState([])
     const [finalPrice, setFinalPrice] = useState(0)
     const [formData, setFormData] = useState({})
 
-    const [show, setShow] = useState(true)
+    const [show, setShow] = useState(false)
     const handleClose = () => setShow(false);
     const router = useRouter()
     const { images } = router.query
@@ -70,6 +78,15 @@ export default function EspaceClient() {
         }
         aux[name.split('--')[1]] = data
         setFormData(aux)
+    }
+
+    const handlePaymentRequest = () => {
+        if(Object.keys(formData).length != imagesObjects.length){
+            notify("error", "Veuillez saisir tous les informations")
+            return
+        }
+        console.log('izizibi')
+        setShow(true)
     }
 
     useEffect(() => {
@@ -110,8 +127,8 @@ export default function EspaceClient() {
                                 <div className="w-100 d-flex justify-content-between">
                                     <div className='form-group mr-3 col-6'>
                                         <label>Support</label>
-                                        <select name={`support--${e._id}`} class="" aria-label="Default select example" onChange={handleChange}>
-                                            <option selected></option>
+                                        <select name={`support--${e._id}`} className="" aria-label="Default select example" onChange={handleChange}>
+                                            <option defaultChecked={true}></option>
                                             <option value="print">Print</option>
                                             <option value="web">Web</option>
                                             <option value="printweb">Print+Web</option>
@@ -119,8 +136,8 @@ export default function EspaceClient() {
                                     </div>
                                     <div className='form-group col-6'>
                                         <label>Diffusion</label>
-                                        <select name={`diffusion--${e._id}`} class="" aria-label="Default select example" onChange={handleChange}>
-                                            <option selected></option>
+                                        <select name={`diffusion--${e._id}`} className="" aria-label="Default select example" onChange={handleChange}>
+                                            <option defaultChecked={true}></option>
                                             <option value="national">National</option>
                                             <option value="europe">Europe</option>
                                             <option value="mondial">Mondial</option>
@@ -130,8 +147,8 @@ export default function EspaceClient() {
                                 <div className="w-100 d-flex justify-content-between">
                                     <div className='form-group mr-3 col-6'>
                                         <label>Taille</label>
-                                        <select name={`taille--${e._id}`} class="" aria-label="Default select example" onChange={handleChange}>
-                                            <option selected></option>
+                                        <select name={`taille--${e._id}`} className="" aria-label="Default select example" onChange={handleChange}>
+                                            <option defaultChecked></option>
                                             <option value="double">Double page</option>
                                             <option value="couverture">2ème, 3ème our 4ème de couverture</option>
                                             <option value="pleine">Pleine page</option>
@@ -141,8 +158,8 @@ export default function EspaceClient() {
                                     </div>
                                     <div className='form-group col-6'>
                                         <label>Nombre</label>
-                                        <select name={`nombre--${e._id}`} class="" aria-label="Default select example" onChange={handleChange}>
-                                            <option selected></option>
+                                        <select name={`nombre--${e._id}`} className="" aria-label="Default select example" onChange={handleChange}>
+                                            <option defaultChecked></option>
                                             <option value="1000"> {"<"}1000 </option>
                                             <option value="10000"> {"<"}10 000 </option>
                                             <option value="100000"> {"<"}100 000 </option>
@@ -170,14 +187,14 @@ export default function EspaceClient() {
                         <div className="mb-5">
                             <span className="text-white">Prix finale : {finalPrice}</span>
                         </div>
-                        <button className="btn btn-secondary mt-3" onClick={()=>setShow(true)}>Informations de payment</button>
+                        <button className="btn btn-secondary mt-3" onClick={() => handlePaymentRequest()}>Informations de payment</button>
                     </div>
                 }
                 <Modal show={show} dialogClassName='payment-modal' onHide={handleClose}>
                     <Modal.Header closeButton>
                     </Modal.Header>
                     <Modal.Body>
-                        <StipeContainer />
+                        <StipeContainer images={imagesObjects.map(e=>e._id)} ammount={finalPrice * 100} />
                     </Modal.Body>
                 </Modal>
 

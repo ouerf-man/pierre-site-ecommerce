@@ -107,52 +107,6 @@ export default function Home(props) {
     )
 }
 
-const reportages = [
-    {
-        src: "https://images.pexels.com/photos/4126684/pexels-photo-4126684.jpeg",
-        alt: 'Korba passmenterie',
-        title: "First slide label",
-        description: "Nulla vitae elit libero, a pharetra augue mollis interdum."
-    },
-    {
-        src: "https://images.pexels.com/photos/3457273/pexels-photo-3457273.jpeg",
-        alt: 'Korba passmenterie',
-        title: "First slide label",
-        description: "Nulla vitae elit libero, a pharetra augue mollis interdum."
-    },
-    {
-        src: "https://images.pexels.com/photos/2228561/pexels-photo-2228561.jpeg",
-        alt: 'Korba passmenterie',
-        title: "First slide label",
-        description: "Nulla vitae elit libero, a pharetra augue mollis interdum."
-    },
-    {
-        src: "https://images.pexels.com/photos/4626371/pexels-photo-4626371.jpeg",
-        alt: 'Korba passmenterie',
-        title: "First slide label",
-        description: "Nulla vitae elit libero, a pharetra augue mollis interdum."
-    },
-    {
-        src: "https://images.pexels.com/photos/3120864/pexels-photo-3120864.jpeg",
-        alt: 'Korba passmenterie',
-        title: "First slide label",
-        description: "Nulla vitae elit libero, a pharetra augue mollis interdum."
-    },
-    {
-        src: "https://images.pexels.com/photos/2228560/pexels-photo-2228560.jpeg",
-        alt: 'Korba passmenterie',
-        title: "First slide label",
-        description: "Nulla vitae elit libero, a pharetra augue mollis interdum."
-    },
-    {
-        src: "https://images.pexels.com/photos/4132936/pexels-photo-4132936.png",
-        alt: 'Korba passmenterie',
-        title: "First slide label",
-        description: "Nulla vitae elit libero, a pharetra augue mollis interdum."
-    },
-].map((e, i) => {
-    return { ...e, id: i }
-})
 
 export async function getServerSideProps(context) {
     const slug = context.query.slug

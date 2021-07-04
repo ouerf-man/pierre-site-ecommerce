@@ -8,10 +8,9 @@ import logger from 'redux-logger'
 const reducers = combineReducers({auth: AuthReducer});
 
 
-export const initStore = (initialState = {}) => {
+export const initStore = () => {
    return createStore(
        reducers,
-       initialState,
        composeWithDevTools(applyMiddleware(thunkMiddleware, logger))
    )
 };

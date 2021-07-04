@@ -59,22 +59,22 @@ exports.updateOne = async (req, res, next) => {
     var options = { new: true },
         query = { _id: req.params.id },
         update = {
-            title : body.title,
-            description : body.description,
-            cover : body.cover
+            title: body.title,
+            description: body.description,
+            cover: body.cover
         }
     for (var propName in update) {
         if (update[propName] === null || update[propName] === undefined) {
             delete update[propName];
         }
     }
-    try{
+    try {
         const blog = await Blog.findOneAndUpdate(query, update, options)
         return res.status(200).json({
-            success : true,
+            success: true,
             data: blog
         })
-    }catch(e){
+    } catch (e) {
         return res.status(500).json({
             success: false,
             message: "something went wrong"
@@ -83,12 +83,12 @@ exports.updateOne = async (req, res, next) => {
 }
 
 exports.deleteOne = async (req, res, next) => {
-    try{
+    try {
         const blog = await Blog.findByIdAndDelete(req.params.id)
         return res.status(200).json({
-            success : true,
+            success: true,
         })
-    }catch(e){
+    } catch (e) {
         return res.status(500).json({
             success: false,
             message: "something went wrong"
@@ -114,6 +114,21 @@ exports.getAll = async (req, res, next) => {
 exports.getById = async (req, res, next) => {
     try {
         const blog = await Blog.findById(req.params.id)
+        return res.status(200).json({
+            success: true,
+            data: blog
+        })
+    } catch (e) {
+        return res.status(500).json({
+            success: false,
+            message: "something went wrong"
+        })
+    }
+}
+
+exports.getBySlug = async (req, res, next) => {
+    try {
+        const blog = await Blog.findOne({ slug: req.params.slug })
         return res.status(200).json({
             success: true,
             data: blog

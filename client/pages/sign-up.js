@@ -1,11 +1,38 @@
 import Head from 'next/head'
 import Link from 'next/link'
+import { useState, useCallback, useEffect } from 'react'
+import { connect } from "react-redux"
+import { signUp } from "../src/state/actions/actionCreator"
+import toast from "../src/components/Toast"
 
-export default function Signup({ countries }) {
+import WithOutAuth from "../src/components/WithOutAuth"
+function Signup(props) {
+    const notify = useCallback((type, message) => {
+        toast({ type, message });
+    }, []);
+
+    const { countries, isLoggedIn, user, dispatch } = props
+    const [userDetails, setUserDetailsTo] = useState({})
+    const handleChange = (e) => {
+        const aux = { ...userDetails }
+        aux[e.target.name] = e.target.value
+        setUserDetailsTo(aux)
+    }
+    const handleSubmit = async (e) => {
+        e.preventDefault()
+        dispatch(signUp(userDetails))
+            .then((res) => {
+                if (res.success) {
+                    notify('success', res.message)
+                } else {
+                    notify('error', res.message)
+                }
+            })
+    }
     return (
         <>
             <Head>
-                <title>Login</title>
+                <title>Créer mon compte</title>
                 <meta name="viewport" content="width=device-width,initial-scale=1" />
                 <link rel="icon" href="/logo-pierre-3.png" />
             </Head>
@@ -29,28 +56,28 @@ export default function Signup({ countries }) {
                             <div className="fadeIn first">
                                 <i className="bi bi-person-circle"></i>
                             </div>
-                            <form>
-                                <input type="text" id="prenom" className="fadeIn first" name="prenom" placeholder="prenom" />
-                                <input type="text" id="nom" className="fadeIn first" name="nom" placeholder="nom" />
-                                <input type="text" id="entreprise" className="fadeIn first" name="entreprise" placeholder="entreprise" />
-                                <select class="form-select" aria-label="Default select example">
-                                    <option selected disabled style={{ color: '#ccc' }}>Pays</option>
+                            <form onSubmit={handleSubmit}>
+                                <input type="text" required id="firstName" className="fadeIn first" name="firstName" placeholder="prenom" onChange={handleChange} />
+                                <input type="text" required id="lastName" className="fadeIn first" name="lastName" placeholder="nom" onChange={handleChange} />
+                                <input type="text" required id="company" className="fadeIn first" name="company" placeholder="entreprise" onChange={handleChange} />
+                                <select required name='country' className="form-select" aria-label="Default select example" onChange={handleChange}>
+                                    <option defaultValue disabled style={{ color: '#ccc' }}>Pays</option>
                                     {
                                         countries.map((e, i) => {
                                             return <option key={i} value={e.translations.fr}>{e.translations.fr}</option>
                                         })
                                     }
                                 </select>
-                                <input type="text" id="rue" className="fadeIn second" name="rue" placeholder="numero et nom de rue" />
-                                <input type="text" id="appartement" className="fadeIn second" name="entreprise" placeholder="Appartement, bureau, etc." />
-                                <input type="text" id="region" className="fadeIn second" name="entreprise" placeholder="Région / Département" />
-                                <input type="text" id="codePostal" className="fadeIn second" name="entreprise" placeholder="Code postal" />
-                                <input type="text" id="tva" className="fadeIn third" name="entreprise" placeholder="Téléphone" />
-                                <input type="text" id="telephone" className="fadeIn third" name="entreprise" placeholder="Code TVA intracommunautaire de l'entreprise" />
-                                <input type="text" id="identifiant" className="fadeIn third" name="entreprise" placeholder="Identifiant" />
-                                <input type="text" id="login" className="fadeIn fourth" name="login" placeholder="email" />
-                                <input type="text" id="password" className="fadeIn fourth mb-3" name="login" placeholder="mot de passe" />
-                                <input type="submit" className="fadeIn fourth" value="M'enregistrer" />
+                                <input required type="text" id="rue" className="fadeIn second" name="adress" placeholder="numero et nom de rue" onChange={handleChange} />
+                                <input required type="text" id="appartement" className="fadeIn second" name="appartement" placeholder="Appartement, bureau, etc." onChange={handleChange} />
+                                <input required type="text" id="region" className="fadeIn second" name="region" placeholder="Région / Département" onChange={handleChange} />
+                                <input required type="text" id="codePostal" className="fadeIn second" name="zipCode" placeholder="Code postal" onChange={handleChange} />
+                                <input required type="text" id="tva" className="fadeIn third" name="tva" placeholder="Téléphone" onChange={handleChange} />
+                                <input required type="text" id="telephone" className="fadeIn third" name="phone" placeholder="Code TVA intracommunautaire de l'entreprise" onChange={handleChange} />
+                                <input required type="text" id="identifiant" className="fadeIn third" name="username" placeholder="Identifiant" onChange={handleChange} />
+                                <input required type="email" id="login" className="fadeIn fourth" name="email" placeholder="email" onChange={handleChange} />
+                                <input required type="password" id="password" className="fadeIn fourth mb-3" name="password" placeholder="mot de passe" onChange={handleChange} />
+                                <input required type="submit" className="fadeIn fourth" value="M'enregistrer" />
                             </form>
 
                             <div id="formFooter">
@@ -68,6 +95,7 @@ export default function Signup({ countries }) {
 }
 
 export async function getStaticProps() {
+
     const res = await fetch("https://restcountries.eu/rest/v2/all")
     const countries = await res.json();
     return {
@@ -76,3 +104,11 @@ export async function getStaticProps() {
         }
     }
 }
+
+const mapStateToProps = state => ({
+    isLoggedIn: state.auth.isLoggedIn,
+    user: state.auth.user
+});
+
+
+export default connect(mapStateToProps)(WithOutAuth(Signup));

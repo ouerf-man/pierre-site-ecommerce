@@ -9,7 +9,7 @@ router.route('').post(blogService.addBlog)
 router.route('/:id').get(blogService.getById)
     .put(blogService.updateOne)
     .delete(blogService.deleteOne)
-router.route('/slug/:id').get(blogService.getById)
+router.route('/slug/:slug').get(blogService.getBySlug)
 
 router.route('/image').post(imageUpload.single('cover'), function (req, res, next) {
     /* if (err) {
