@@ -10,6 +10,8 @@ const Blogs = React.lazy(() => import("./views/blog/Blogs"));
 const Blog = React.lazy(() => import("./views/blog/Blog"));
 const AddBlog = React.lazy(() => import("./views/blog/AddBlog"));
 
+const Coeff = React.lazy(() => import("./views/coeff"));
+
 
 const routes = [
   { path: "/", exact: true, name: "Acceuil" },
@@ -23,6 +25,8 @@ const routes = [
   { path: "/create-blog/:id", exact: true, name: "information du blog", component: AddBlog, },
   { path: "/create-blog", exact: true, name: "Créer un blog", component: AddBlog, },
   { path: "/blog/:id", exact: true, name: "information du blog", component: Blog, },
+
+  {path : '/coeff', exact: true, name: "Coefficients", component: Coeff,}
 ];
 
 export default routes;

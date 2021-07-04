@@ -117,7 +117,7 @@ const Users = () => {
                         variant="outline"
                         shape="square"
                         size="sm"
-                        onClick={(item) => history.push(`/create-blog/${item._id}`)}
+                        onClick={() => history.push(`/create-blog/${item._id}`)}
                       >
                         Mise à jour
                       </CButton>

@@ -7,11 +7,13 @@ const passport = require("passport");
 const cors = require('cors');
 
 const dbService = require('./configs/db.service');
+const coeffInit = require('./configs/initCoeffs')
 
 const userRouter = require('./routes/user')
 const reportageRouter = require('./routes/reportage')
 const blogRouter = require('./routes/blog')
 const paymentRouter = require('./routes/payment')
+const coeffRouter = require('./routes/coeff')
 
 const { renderFile } = require('jade');
 const app = express();
@@ -33,7 +35,7 @@ app.use(passport.initialize());
 require("./utils/passport")(passport);
 // connecting to database
 dbService.establishConnection();
-
+coeffInit()
 app.use('/health',function(req,res){
   res.send('health 100%')
 })
@@ -41,6 +43,7 @@ app.use("/user",userRouter)
 app.use("/reportage",reportageRouter)
 app.use("/blog",blogRouter)
 app.use("/payment",paymentRouter)
+app.use("/coeff",coeffRouter)
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

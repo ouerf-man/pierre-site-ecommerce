@@ -28,6 +28,12 @@ const _nav = [
     to: "/blogs",
     icon: "cil-user",
   },
+  {
+    _tag: "CSidebarNavItem",
+    name: "Coefficients",
+    to: "/coeff",
+    icon: "cil-pencil",
+  },
   /*{
     _tag: 'CSidebarNavItem',
     name: 'Typography',

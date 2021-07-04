@@ -1,6 +1,12 @@
 import axios from "axios";
 import { API } from "./config"
 
+export const getCoeff = () => {
+    return axios.get(`${API}/coeff`).then(res => {
+        return res.data
+    })
+}
+
 export const charge = (body) => {
     return axios.post(`${API}/payment/charge`, body).then(res => {
         return res.data

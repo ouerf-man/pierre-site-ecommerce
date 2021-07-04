@@ -4,49 +4,27 @@ import { useEffect, useState, useCallback } from "react"
 import styles from '../styles/Payment.module.css'
 import { useRouter } from 'next/router'
 import * as apiService from "../src/services/api.reportage.service"
+import { getCoeff } from "../src/services/api.account.service"
 import StipeContainer from "../src/components/Stripe"
 import toast from "../src/components/Toast"
 import {
     Modal,
 } from "react-bootstrap"
-const quoeff = {
-    "support": {
-        "print": 200,
-        "web": 100,
-        "printweb": 250
-    },
-    "diffusion": {
-        "national": 1,
-        "europe": 1.5,
-        "mondial": 2
-    },
-    "taille": {
-        "double": 2,
-        "couverture": 1.5,
-        "pleine": 1,
-        "demi": 0.8,
-        "quart": 0.7
-    },
-    "nombre": {
-        "1000": 1,
-        "10000": 1.5,
-        "100000": 2,
-        "s100000": 3
-    }
-}
 
 export default function EspaceClient() {
     const notify = useCallback((type, message) => {
         toast({ type, message });
-      }, []);
-    
-      const dismiss = useCallback(() => {
+    }, []);
+
+    const dismiss = useCallback(() => {
         toast.dismiss();
-      }, []);
+    }, []);
     const [loading, setLoading] = useState(true)
     const [imagesObjects, setImages] = useState([])
     const [finalPrice, setFinalPrice] = useState(0)
     const [formData, setFormData] = useState({})
+
+    const [quoeff, setQuoeff] = useState({})
 
     const [show, setShow] = useState(false)
     const handleClose = () => setShow(false);
@@ -61,8 +39,37 @@ export default function EspaceClient() {
                 setImages([...aux])
             }
         });
-        setFinalPrice(imagesObjects.length * quoeff.support.print)
-        setLoading(false)
+        getCoeff().then(res => {
+            const data = res.data
+            const aux = {
+                "support": {
+                    "print": data.print,
+                    "web": data.web,
+                    "printweb": data.print_web
+                },
+                "diffusion": {
+                    "national": data.national,
+                    "europe": data.europe,
+                    "mondial": data.mondial
+                },
+                "taille": {
+                    "double": data.double,
+                    "couverture": data.couverture,
+                    "pleine": data.pleine,
+                    "demi": data.demi,
+                    "quart": data.quart
+                },
+                "nombre": {
+                    "1000": data.n1000,
+                    "10000": data.n10000,
+                    "100000": data.n100000,
+                    "s100000": data.ns100000
+                }
+            }
+            setQuoeff(aux)
+            setFinalPrice(imagesObjects.length * data.print)
+            setLoading(false)
+        })
     }, [])
 
     const handleChange = (e) => {
@@ -81,7 +88,7 @@ export default function EspaceClient() {
     }
 
     const handlePaymentRequest = () => {
-        if(Object.keys(formData).length != imagesObjects.length){
+        if (Object.keys(formData).length != imagesObjects.length) {
             notify("error", "Veuillez saisir tous les informations")
             return
         }
@@ -194,7 +201,7 @@ export default function EspaceClient() {
                     <Modal.Header closeButton>
                     </Modal.Header>
                     <Modal.Body>
-                        <StipeContainer images={imagesObjects.map(e=>e._id)} ammount={finalPrice * 100} />
+                        <StipeContainer images={imagesObjects.map(e => e._id)} ammount={finalPrice * 100} />
                     </Modal.Body>
                 </Modal>
 

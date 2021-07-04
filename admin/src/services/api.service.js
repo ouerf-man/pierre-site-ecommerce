@@ -143,3 +143,33 @@ export const deleteBlog = (id) => {
             return null;
         });
 }
+
+export const updateCoeff = (id,body) => {
+    return axios.put(`${api}/coeff/${id}`,body)
+        .then(res => {
+            if (res.status === 200) {
+                return res.data || null;
+            } else {
+                return null
+            }
+        })
+        .catch(err => {
+            console.log(err);
+            return null;
+        });
+}
+
+export const getCoeff = () => {
+    return axios.get(`${api}/coeff`)
+        .then(res => {
+            if (res.status === 200) {
+                return res.data || null;
+            } else {
+                return null
+            }
+        })
+        .catch(err => {
+            console.log(err);
+            return null;
+        });
+}
