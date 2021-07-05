@@ -1,15 +1,15 @@
 import Head from 'next/head'
 import Link from "next/link"
 import styles from '../../styles/Reportage.module.css'
+import {connect} from "react-redux"
 import { useState } from "react"
 import {
     Modal,
     Carousel,
-    CarouselItem
 } from "react-bootstrap"
 import { getBySlug } from '../../src/services/api.reportage.service'
 
-export default function Home(props) {
+function Home(props) {
     const reportage = props.reportage
     const [selectedImages, setSelectedImages] = useState([])
     const [finalQuery, setFinalQuery] = useState('')
@@ -37,12 +37,12 @@ export default function Home(props) {
         }
 
         setSelectedImages(items)
-        setFinalQuery(items.reduce((acc,cv)=>{
-            if(acc==''){
-                return acc+cv._id
+        setFinalQuery(items.reduce((acc, cv) => {
+            if (acc == '') {
+                return acc + cv._id
             }
-            return acc + '-'+ cv._id
-        },''))
+            return acc + '-' + cv._id
+        }, ''))
     }
     return (
         <>
@@ -62,14 +62,29 @@ export default function Home(props) {
                             <p className='mt-5 left-paragraph'>
                                 {selectedImages.length} images selectionnés
                             </p>
-                            <Link href={{
-                                pathname: '/payment',
-                                query: {images:finalQuery}
-                            }}>
-                                <button className='btn btn-danger mt-5 text-white'>
-                                    acquisition de droit
-                                </button>
-                            </Link>
+                            {
+                                selectedImages.length > 0
+                                &&
+                                (
+                                    props.isLoggedIn ?
+                                        <Link href={{
+                                            pathname: '/payment',
+                                            query: { images: finalQuery }
+                                        }}>
+                                            <button className='btn btn-danger mt-5 text-white'>
+                                                Acquisition de droit
+                                            </button>
+                                        </Link> :
+                                        <Link href={{
+                                            pathname: '/login',
+                                            query: { images: finalQuery, redirectTo : '/payment' }
+                                        }}>
+                                            <button className='btn btn-danger mt-5 text-white'>
+                                                Acquisition de droit
+                                            </button>
+                                        </Link>
+                                )
+                            }
                         </div>
                     </div>
                 </div>
@@ -117,3 +132,11 @@ export async function getServerSideProps(context) {
         }, // will be passed to the page component as props
     }
 }
+
+const mapStateToProps = state => ({
+    isLoggedIn: state.auth.isLoggedIn,
+    user: state.auth.user
+});
+
+
+export default connect(mapStateToProps)(Home);

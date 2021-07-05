@@ -15,11 +15,11 @@ else{
 module.exports = {
     ENV: envirnoment,
     MONGODB_URI: process.env.DATABASE_URL,
-    /* SMTP: {
+     SMTP: {
         SECRET_KEY: process.env.SMTP_SECRET_KEY,
         PASSWORD: process.env.SMTP_PASSWORD,
         FROM_EMAIL: process.env.SMTP_EMAIL
-    }, */
+    }, 
     /* PAYPAL: {
         CLIENT_ID: process.env.PAYPAL_CLIENT_ID,
         CLIENT_SECRET: process.env.PAYPAL_SECRET

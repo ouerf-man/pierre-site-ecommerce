@@ -1,5 +1,6 @@
 import Head from 'next/head'
 import Link from 'next/link'
+import {useRouter} from "next/router"
 import { useState, useCallback } from 'react'
 import { connect } from "react-redux"
 import { login } from "../src/state/actions/actionCreator"
@@ -11,7 +12,8 @@ function Login(props) {
     const notify = useCallback((type, message) => {
         toast({ type, message });
     }, []);
-
+    const Router = useRouter()
+    const { images, redirectTo } = Router.query
 
     const { isLoggedIn, user, dispatch } = props
     const [userDetails, setUserDetailsTo] = useState({})
@@ -36,6 +38,11 @@ function Login(props) {
             .then((res) => {
                 if (res.success) {
                     notify('success', res.message)
+                    if(redirectTo){
+                        Router.replace(redirectTo+"?images="+images)
+                    }else{
+                        Router.replace('reportages')
+                    }
                 } else {
                     notify('error', res.message)
                 }
@@ -75,9 +82,12 @@ function Login(props) {
                             </form>
 
                             <div id="formFooter">
-                                <a className="underlineHover forgotPassword" id="forgotPassword" href="#">mot de passe oublié?</a>
+                               {/*  <a className="underlineHover forgotPassword" id="forgotPassword" href="#">mot de passe oublié?</a> */}
                                 <hr />
-                                <Link href="/sign-up">
+                                <Link href={{
+                                    pathname: "/sign-up",
+                                    query: redirectTo ? { redirectTo, images } : null
+                                }}>
                                     <a className="underlineHover d-inline-block" id="forgotPassword">Créer un compte</a>
                                 </Link>
                             </div>
