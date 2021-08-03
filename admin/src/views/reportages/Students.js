@@ -41,7 +41,7 @@ const Users = () => {
 
   const getAllReportages = async () => {
     const result = await getReportages();
-    setReportages(result.data);
+    setReportages(JSON.parse(result.data));
   }
 
 
@@ -67,15 +67,15 @@ const Users = () => {
             <CDataTable
               items={reportages}
               fields={[
-                { key: 'slug', _classes: 'font-weight-bold' },
-                'title', 'description'
+                { key: 'Slug', _classes: 'font-weight-bold' },
+                'Title', 'Description'
               ]}
               hover
               striped
               itemsPerPage={5}
               activePage={page}
               clickableRows
-              onRowClick={(item) => history.push(`/create-reportage/${item._id}`)}
+              onRowClick={(item) => history.push(`/create-reportage/${item.ReportageId}`)}
               scopedSlots={{
                 'status':
                   (item) => (

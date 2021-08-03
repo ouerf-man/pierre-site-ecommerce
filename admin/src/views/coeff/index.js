@@ -36,24 +36,24 @@ function Coeff(props) {
     const [loading, setLoading] = useState(false)
     const getCoeffs = async ()=>{
         const res = await getCoeff()
-        return res.data
+        return JSON.parse(res.data)
     }
 
     useEffect(()=>{
         getCoeffs().then(data=>{
-            setPrintTo(data.print)
-            setWebTo(data.web)
-            setPrintWebTo(data.print_web)
+            setPrintTo(data.Print)
+            setWebTo(data.Web)
+            setPrintWebTo(data.Print_web)
 
-            setNationalTo(data.national)
-            setEuropeTo(data.europe)
-            setMondialTo(data.mondial)
+            setNationalTo(data.National)
+            setEuropeTo(data.Europe)
+            setMondialTo(data.Mondial)
 
-            setDoubleTo(data.double)
-            setCouvertureTo(data.couverture)
-            setPleineTo(data.pleine)
-            setDemiTo(data.demi)
-            setQuartTo(data.quart)
+            setDoubleTo(data.Double)
+            setCouvertureTo(data.Couverture)
+            setPleineTo(data.Pleine)
+            setDemiTo(data.Demi)
+            setQuartTo(data.Quart)
 
             setN1000To(data.n1000)
             setN10000To(data.n10000)

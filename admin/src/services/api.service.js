@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const api = "http://localhost:8080"
+const api = "https://27f4f17f62d3.ngrok.io"
 
 export const addReportage = (body) => {
     return axios.post(`${api}/reportage`, body)

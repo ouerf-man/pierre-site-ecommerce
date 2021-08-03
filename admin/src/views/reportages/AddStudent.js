@@ -36,8 +36,8 @@ const AddStudent = (props) => {
       setReportageSlug(props.match.params.id)
       const reportage = await apiService.getReportage(props.match.params.id)
       console.log(reportage)
-      setTitre(reportage.data.title)
-      setDescription(reportage.data.description)
+      setTitre(reportage.data.Title)
+      setDescription(reportage.data.Description)
       setPreviewImages(reportage.data.images.map(e=>([e.tagged,e.size1,e.size2,e.size3])))
     }
   }, [])
@@ -142,7 +142,7 @@ const AddStudent = (props) => {
             <CRow>
               <CCol sm="3">
                 <CFormGroup>
-                  <CLabel htmlFor="titre">Image low size</CLabel>
+                  <CLabel htmlFor="titre">LOW 510x340</CLabel>
                   <CInput
                     type="file"
                     id="titre"
@@ -156,7 +156,7 @@ const AddStudent = (props) => {
               </CCol>
               <CCol sm="3">
                 <CFormGroup>
-                  <CLabel htmlFor="titre">Image resolution 1</CLabel>
+                  <CLabel htmlFor="titre">5680x3781</CLabel>
                   <CInput
                     type="file"
                     id="titre"
@@ -170,7 +170,7 @@ const AddStudent = (props) => {
               </CCol>
               <CCol sm="3">
                 <CFormGroup>
-                  <CLabel htmlFor="titre">Image resolution 2</CLabel>
+                  <CLabel htmlFor="titre">4252x2835</CLabel>
                   <CInput
                     type="file"
                     id="titre"
@@ -184,7 +184,7 @@ const AddStudent = (props) => {
               </CCol>
               <CCol sm="3">
                 <CFormGroup>
-                  <CLabel htmlFor="titre">Image resolution 3</CLabel>
+                  <CLabel htmlFor="titre">2126x1417</CLabel>
                   <CInput
                     type="file"
                     id="titre"
