@@ -7,12 +7,47 @@ import { connect } from "react-redux"
 import WithAuth from "../src/components/WithAuth"
 
 import { useEffect, useState } from 'react'
+const downloadButtonStyle = {
+    width: '100px',
+    height: '70px',
+    backgroundColor: '#ed1c24',
+    color: '#fff',
+    borderRadius: "10px",
+    padding: 15,
+    cursor: 'pointer'
+}
+
+
 function EspaceClient(props) {
     const [transactionsArray, setTransactionsTo] = useState(null)
+    const [fetching, setFetching] = useState(false);
+    const [error, setError] = useState(false);
     useEffect(async () => {
         const transactions = await api.getTransactions(props.user.id)
         setTransactionsTo(transactions.data)
     }, [])
+
+    const download = (url, name) => {
+        if (!url) {
+            throw new Error("Resource URL not provided! You need to provide one");
+        }
+        setFetching(true);
+        fetch(url)
+            .then(response => response.blob())
+            .then(blob => {
+                setFetching(false);
+                const blobURL = URL.createObjectURL(blob);
+                const a = document.createElement("a");
+                a.href = blobURL;
+                a.style = "display: none";
+
+                if (name && name.length) a.download = name;
+                document.body.appendChild(a);
+                a.click();
+            })
+            .catch(() => setError(true));
+    };
+
     return (
         <>
             <Head>
@@ -37,7 +72,7 @@ function EspaceClient(props) {
                         transactionsArray.map(e => <div key={e._id}>
                             <h4 className="mt-5">{e.images[0].reportage.title}</h4>
                             {
-                                e.images.map(img => (
+                                e.images.map((img, i) => (
                                     <div className="d-flex align-items-center">
                                         <div style={{ width: 100, height: 100, position: 'relative', marginBottom: '25px', display: 'inline-block' }}>
                                             <Image src={img.tagged}
@@ -46,9 +81,24 @@ function EspaceClient(props) {
                                                 objectPosition='50% 50%'>
                                             </Image>
                                         </div>
-                                        <p className="d-inline-block ml-5">
-                                            <a href={img.size1}>{img.size1}</a>
-                                        </p>
+                                        <div className="d-inline-block ml-5 d-flex flex-column align-items-center justify-content-center">
+                                            <p className="mt-0">5680x3781</p>
+                                            <p>
+                                                <a style={downloadButtonStyle} onClick={() => download(img.size1, `${e.images[0].reportage.title}${i}taille1`)}>Télecharger</a>
+                                            </p>
+                                        </div>
+                                        <div className="d-inline-block ml-5 d-flex flex-column align-items-center justify-content-center">
+                                            <p className="mt-0">4252x2835</p>
+                                            <p>
+                                                <a style={downloadButtonStyle} onClick={() => download(img.size2, `${e.images[0].reportage.title}${i}taille2`)}>Télecharger</a>
+                                            </p>
+                                        </div>
+                                        <div className="d-inline-block ml-5 d-flex flex-column align-items-center justify-content-center">
+                                            <p className="mt-0">2126x1417</p>
+                                            <p>
+                                                <a style={downloadButtonStyle} onClick={() => download(img.size3, `${e.images[0].reportage.title}${i}taille3`)}>Télecharger</a>
+                                            </p>
+                                        </div>
                                     </div>
                                 ))
                             }
