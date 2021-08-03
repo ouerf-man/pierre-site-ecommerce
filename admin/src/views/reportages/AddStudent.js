@@ -142,7 +142,7 @@ const AddStudent = (props) => {
             <CRow>
               <CCol sm="3">
                 <CFormGroup>
-                  <CLabel htmlFor="titre">Image low size</CLabel>
+                  <CLabel htmlFor="titre">LOW 510x340</CLabel>
                   <CInput
                     type="file"
                     id="titre"
@@ -156,7 +156,7 @@ const AddStudent = (props) => {
               </CCol>
               <CCol sm="3">
                 <CFormGroup>
-                  <CLabel htmlFor="titre">Image resolution 1</CLabel>
+                  <CLabel htmlFor="titre">5680x3781</CLabel>
                   <CInput
                     type="file"
                     id="titre"
@@ -170,7 +170,7 @@ const AddStudent = (props) => {
               </CCol>
               <CCol sm="3">
                 <CFormGroup>
-                  <CLabel htmlFor="titre">Image resolution 2</CLabel>
+                  <CLabel htmlFor="titre">4252x2835</CLabel>
                   <CInput
                     type="file"
                     id="titre"
@@ -184,7 +184,7 @@ const AddStudent = (props) => {
               </CCol>
               <CCol sm="3">
                 <CFormGroup>
-                  <CLabel htmlFor="titre">Image resolution 3</CLabel>
+                  <CLabel htmlFor="titre">2126x1417</CLabel>
                   <CInput
                     type="file"
                     id="titre"
