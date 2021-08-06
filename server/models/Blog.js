@@ -18,7 +18,11 @@ const BlogSchema = new Schema({
     publish: {
         type: Boolean,
         default: true
-    }
+    },
+    comments: [{
+        type: mongoose.SchemaTypes.ObjectId,
+        ref: 'comment',
+    }],
 }, { timestamps: true });
 
 

@@ -1,5 +1,7 @@
 const Blog = require('../../models/Blog')
 const removeUmlauts = require('../../helpers/removeUmlauts')
+const Comment = require('../../models/Comment')
+const Account = require('../../models/Account')
 
 exports.addBlog = async (req, res, next) => {
     const body = req.body
@@ -128,12 +130,59 @@ exports.getById = async (req, res, next) => {
 
 exports.getBySlug = async (req, res, next) => {
     try {
-        const blog = await Blog.findOne({ slug: req.params.slug })
+        const blog = await Blog.findOne({ slug: req.params.slug }).populate({
+            path: 'comments',
+            populate: [
+                {
+                    path: 'author',
+                    model: Account
+                }, {
+                    path: 'replies',
+                    model: Comment,
+                    populate: {
+                        path : 'author',
+                        model: Account
+                    }
+                }
+            ]
+        })
         return res.status(200).json({
             success: true,
             data: blog
         })
     } catch (e) {
+        return res.status(500).json({
+            success: false,
+            message: "something went wrong"
+        })
+    }
+}
+
+exports.comment = async (req, res, next) => {
+    try {
+        let blog
+        if (req.body.commentId) {
+            const newComment = await Comment.create({
+                author: req.body.author,
+                body: req.body.body,
+            })
+            await Comment.findByIdAndUpdate(req.body.commentId, { $push: { replies: newComment._id } }, { new: true })
+            blog = await Blog.findOne({ slug: req.params.slug })
+        } else {
+
+            const comment = await Comment.create({
+                author: req.body.author,
+                body: req.body.body,
+            })
+            blog = await Blog.findOneAndUpdate({ slug: req.params.slug }, { $push: { comments: comment._id } }, { new: true })
+        }
+
+        return res.status(200).json({
+            success: true,
+            data: blog
+        })
+    } catch (e) {
+        console.log(e)
         return res.status(500).json({
             success: false,
             message: "something went wrong"

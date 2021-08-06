@@ -10,6 +10,7 @@ router.route('/:id').get(blogService.getById)
     .put(blogService.updateOne)
     .delete(blogService.deleteOne)
 router.route('/slug/:slug').get(blogService.getBySlug)
+router.route('/comment/:slug').post(blogService.comment)
 
 router.route('/image').post(imageUpload.single('cover'), function (req, res, next) {
     /* if (err) {

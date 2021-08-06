@@ -30,7 +30,7 @@ const AddStudent = (props) => {
   const [description, setDescription] = useState("");
   const [previewImages, setPreviewImages] = useState([])
   const [files, setFiles] = useState([])
-
+  const [loadingFiles, setLoadingFiles] = useState(false)
   React.useEffect(async () => {
     if (props.match.params.id) {
       setReportageSlug(props.match.params.id)
@@ -38,7 +38,7 @@ const AddStudent = (props) => {
       console.log(reportage)
       setTitre(reportage.data.title)
       setDescription(reportage.data.description)
-      setPreviewImages(reportage.data.images.map(e=>([e.tagged,e.size1,e.size2,e.size3])))
+      setPreviewImages(reportage.data.images.map(e => ([e.tagged, e.size1, e.size2, e.size3])))
     }
   }, [])
 
@@ -49,20 +49,23 @@ const AddStudent = (props) => {
   }
 
   const handleFilesUpload = async () => {
+    setLoadingFiles(true)
     if (files.length != 4) {
       alert('4 files required')
+      setLoadingFiles(false)
       return
     }
-    const preview = [...previewImages]
-    preview.push(files.map(e => URL.createObjectURL(e)))
-    setPreviewImages(preview)
     const fd = new FormData()
     fd.append('tagged', files[0])
     fd.append('size1', files[1])
     fd.append('size2', files[2])
     fd.append('size3', files[3])
-    console.log(fd)
-    await apiService.addPhoto(props.match.params.id, fd)
+    await apiService.addPhoto(props.match.params.id, fd).then(res => {
+      setLoadingFiles(false)
+      const preview = [...previewImages]
+      preview.push(files.map(e => URL.createObjectURL(e)))
+      setPreviewImages(preview)
+    }).catch(err => setLoadingFiles(false))
     setFiles([])
   }
 
@@ -196,7 +199,14 @@ const AddStudent = (props) => {
                   {files[3] && <img height="120px" src={URL.createObjectURL(files[3])} />}
                 </CFormGroup>
               </CCol>
-              <CButton size="sm" color="success" onClick={handleFilesUpload}>Ajouter</CButton>
+              <CButton size="sm" color="success" disabled={loadingFiles} onClick={handleFilesUpload}>
+                {
+                  loadingFiles ? <div class="spinner-border" role="status">
+                    <span class="sr-only">Loading...</span>
+                  </div> :
+                    "Ajouter"
+                }
+              </CButton>
             </CRow>
           }
         </CCol>
