@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
 import * as api from "../../services/api.account.service"
 import { connect } from "react-redux"
-const CheckoutFormCard = ({ images, ammount, user }) => {
+const CheckoutFormCard = ({ images, ammount, user, coeffs }) => {
+    
     const stripe = useStripe();
     const elements = useElements();
 

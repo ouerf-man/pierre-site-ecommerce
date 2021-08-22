@@ -89,10 +89,10 @@ export default function EspaceClient() {
 
     const handlePaymentRequest = () => {
         if (Object.keys(formData).length != imagesObjects.length) {
-            notify("error", "Veuillez saisir tous les informations")
+            notify("error", "Veuillez saisir toutes les informations")
             return
         }
-        console.log('izizibi')
+        //console.log('izizibi')
         setShow(true)
     }
 
@@ -201,7 +201,7 @@ export default function EspaceClient() {
                     <Modal.Header closeButton>
                     </Modal.Header>
                     <Modal.Body>
-                        <StipeContainer images={imagesObjects.map(e => e._id)} ammount={finalPrice * 100} />
+                        <StipeContainer coeffs={formData} images={imagesObjects.map(e => e._id)} ammount={finalPrice * 100} />
                     </Modal.Body>
                 </Modal>
 
