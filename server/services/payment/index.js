@@ -1,6 +1,7 @@
 const Payment = require('../../models/Payment')
 const Reportage = require('../../models/Reportage')
 const stripe = require("stripe")(process.env.STRIPE_SECRET_TEST);
+const {sendEmail} = require('../../helpers/sendEmail')
 
 exports.charge = async (req, res, next) => {
     console.log("stripe-routes.js 9 | route reached", req.body);
@@ -20,6 +21,9 @@ exports.charge = async (req, res, next) => {
             user: account,
             images
         })
+        if(payment){
+            sendEmail('werfelli.raed@yahoo.fr' , "test", "3asba")
+        }
         res.json({
             message: "Payment Successful",
             success: true,

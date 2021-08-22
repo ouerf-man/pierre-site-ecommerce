@@ -1,9 +1,18 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
+
+import {useRouter} from "next/router"
+
 import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
 import * as api from "../../services/api.account.service"
 import { connect } from "react-redux"
+import toast from "../Toast"
+
 const CheckoutFormCard = ({ images, ammount, user, coeffs }) => {
-    
+    const notify = useCallback((type, message) => {
+        toast({ type, message });
+    }, []);
+
+    const Router = useRouter()
     const stripe = useStripe();
     const elements = useElements();
 
@@ -21,13 +30,14 @@ const CheckoutFormCard = ({ images, ammount, user, coeffs }) => {
                 const res = await api.charge({ amount: ammount, id, images, account: user.id })
 
                 if (res.success) {
-                    alert(res.message)
+                    notify('success', res.message)
+                    Router.replace('espace-client')
                 }
             } catch (error) {
-                alert(error.response.message)
+                notify('error', error.response.message)
             }
         } else {
-            console.log(error.message);
+            notify('error', error.message);
         }
     };
 
@@ -81,7 +91,7 @@ const CheckoutFormCard = ({ images, ammount, user, coeffs }) => {
                     <div style={CardContainerStyle}>
                         <CardElement options={cardElementOptions} className={"stipe-form"} />
                     </div>
-                    <input type="submit" value="payer" />
+                    <input disabled={precessing} type="submit" value="payer" />
                 </div>
             </div>
         </form>
