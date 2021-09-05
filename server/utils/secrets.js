@@ -4,12 +4,14 @@ const path = require('path');
 const envirnoment = process.env.NODE_ENV || 'development';
 
 if (envirnoment === 'development') {
+    console.log("Running dev")
     dotenv.config({ path: path.resolve(__dirname, '../.env.dev') });
 }else if (process.env.name=='stagin-api'){
     dotenv.config({path: path.resolve(__dirname,'../.env.staging') })
 }
 else{
     dotenv.config({ path: path.resolve(__dirname, '../.env.prod') });
+    console.log("Running prod")
 }
 
 module.exports = {

@@ -32,6 +32,8 @@ const CheckoutFormCard = ({ images, ammount, user, coeffs }) => {
                 if (res.success) {
                     notify('success', res.message)
                     Router.replace('espace-client')
+                }else{
+                    notify('error', res.message);
                 }
             } catch (error) {
                 notify('error', error.response.message)
@@ -87,11 +89,11 @@ const CheckoutFormCard = ({ images, ammount, user, coeffs }) => {
                     <input type="text" id="ville" name="ville" required placeholder="Ville" onChange={handleInputChange} />
                     <input type="text" id="adresse" name="adresse" value={user.adress} required placeholder="Adresse" onChange={handleInputChange} />
                     <input type="text" id="gouvernorat" name="gouvernorat" required placeholder="Gouvernorat" onChange={handleInputChange} />
-                    <input type="text" id="zip" name="zip" required value={user.zip} placeholder="Code postal" onChange={handleInputChange} />
+                    <input type="text" id="zip" name="zip" required value={user.zip_code} placeholder="Code postal" onChange={handleInputChange} />
                     <div style={CardContainerStyle}>
                         <CardElement options={cardElementOptions} className={"stipe-form"} />
                     </div>
-                    <input disabled={precessing} type="submit" value="payer" />
+                    <input disabled={precessing} type="submit" value={precessing ? "..." : "payer"} />
                 </div>
             </div>
         </form>
