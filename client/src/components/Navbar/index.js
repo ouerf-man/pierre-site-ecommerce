@@ -1,7 +1,6 @@
 import { useState } from "react";
 import Link from 'next/link'
 import { deAuthenticateAction } from "../../state/actions/actionCreator"
-
 import { connect } from "react-redux"
 const buttonStyle = {
     "fontSize": "19" + "px",
@@ -46,7 +45,7 @@ function Navbar(props) {
                     <a>Reportages</a>
                 </Link>
                 <Link href={props.isLoggedIn ? "espace-client" : "/login"}>
-                    <a>Espace client</a>
+                    <a>Espace éditeur</a>
                 </Link>
                 <Link href="/temoignage">
                     <a>Témoignages</a>

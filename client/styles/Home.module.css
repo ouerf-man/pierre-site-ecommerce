@@ -8,8 +8,11 @@
   left: 2% !important;
   display: inline-block;
   z-index: 100;
+  cursor: pointer;
 }
-
+.logo:hover{
+  opacity: .8;
+}
 .aboutLink {
   background: #ed1c24;
   position: absolute;
@@ -89,6 +92,7 @@
   -moz-animation: slideUp ease 5s;
   -o-animation: slideUp ease 5s;
   -ms-animation: slideUp ease 5s;
+  cursor: default;
 }
 
 .blackbg p {
@@ -102,6 +106,7 @@
   -moz-animation: slideUp ease 5s;
   -o-animation: slideUp ease 5s;
   -ms-animation: slideUp ease 5s;
+  cursor: default;
 }
 
 @keyframes fadeOut {

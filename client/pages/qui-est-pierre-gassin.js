@@ -24,9 +24,9 @@ export default function About() {
                 <p>
                     Aujourd’hui associé à la journaliste Amel Djait pour 1001 Tunisie, ils sont également éditeurs à Sfax (Editions 55).
                 </p>
-                <h2>
+                {/* <h2>
                     Qui est Pierre Gassin?
-                </h2>
+                </h2> */}
             </div>
         </main>
     )

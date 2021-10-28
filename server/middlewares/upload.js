@@ -1,4 +1,6 @@
 const multer = require("multer");
+const secrets = require('../utils/secrets')
+const MulterAzureStorage = require('multer-azure-storage')
 
 
 const MIME_TYPE_MAP = {
@@ -18,7 +20,7 @@ const filter = (req, file, cb) => {
     }
 };
 
-const storage = multer.diskStorage({
+/* const storage = multer.diskStorage({
     destination: (req, file, cb) => {
         cb(null, "static/assets/images/");
     },
@@ -26,7 +28,14 @@ const storage = multer.diskStorage({
         const name = file.originalname.toLowerCase().split(' ').join('-');
         cb(null, `${Date.now()}-${name}`);
     },
-});
+}); */
+
+const storage = new MulterAzureStorage({
+    azureStorageConnectionString: secrets.AZURE_BLOB,
+    containerName: secrets.REPORTAGE_CONTAINER,
+    containerSecurity: 'blob',
+    fileName: (file)=>{return `${Date.now()}-${file.originalname.toLowerCase().split(' ').join('-')}`}
+})
 
 const uploadFile = multer({ storage: storage, fileFilter: filter });
 module.exports = uploadFile;

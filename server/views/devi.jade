@@ -1,0 +1,159 @@
+html 
+    head 
+        meta(http-equiv='Content-Type' content='text/html; charset=UTF-8')
+        meta(name='viewport' content='width=device-width; initial-scale=1.0; maximum-scale=1.0;')
+        style(type='text/css').
+            body {
+            width: 100%;
+            background-color: white;
+            margin: 0;
+            padding: 0;
+            -webkit-font-smoothing: antialiased;
+            font-family: Quicksand, Calibri, sans-serif;
+            }
+            p,
+            h1,
+            h2,
+            h3,
+            h4 {
+            margin-top: 0;
+            margin-bottom: 0;
+            padding-top: 0;
+            padding-bottom: 0;
+            }
+            html {
+            width: 100%;
+            }
+            .attributes {
+            margin: 0 0 21px;
+            }
+            .attributes_content {
+            background-color: #F4F4F7;
+            padding: 16px;
+            }
+            .attributes_item {
+            padding: 0;
+            }
+    body
+        table(border='0' cellpadding='0' cellspacing='0' width='100%')
+            tbody
+                tr
+                    table(align='center' border='0' cellpadding='0' cellspacing='0' width='600' style='border: 1px solid #cccccc; border-collapse: collapse;')
+                        tbody
+                            tr
+                                td(style='padding: 40px 30px 40px 30px;')
+                                    table 
+                                        tbody 
+                                            tr 
+                                                td
+                                                    div
+                                                        | Bonjour 
+                                                        h4(style='display:inline')
+                                                            | #{prenom}
+                                            tr(style=('margin-top:20px'))
+                                                td
+                                                    div
+                                                        | Merci d’avoir choisi nos photos
+                                    table(style='margin-top:30px;width:100%' cellspacing='auto')
+                                        tbody 
+                                            tr 
+                                                td 
+                                                    table.attributes(width='100%' cellpadding='0' cellspacing='0' role='presentation')
+                                                        tbody
+                                                            tr
+                                                                td.attributes_content
+                                                                    table(width='100%' cellpadding='0' cellspacing='0' role='presentation')
+                                                                        tbody
+                                                                            tr
+                                                                                td.attributes_item
+                                                                                    span.f-fallback
+                                                                                        strong Réference:
+                                                                                        |  #{ref}
+                                                                            tr
+                                                                                td.attributes_item
+                                                                                    span.f-fallback
+                                                                                        strong Date:
+                                                                                        |  #{date}
+                                                                            tr
+                                                                                td.attributes_item
+                                                                                    span.f-fallback
+                                                                                        strong Id Client:
+                                                                                        |  #{clientRef}
+
+                                                    td
+                                                        table.attributes(width='100%' cellpadding='0' cellspacing='0' role='presentation')
+                                                            tbody
+                                                                tr
+                                                                    td
+                                                                        table(width='100%' cellpadding='0' cellspacing='0' role='presentation')
+                                                                            tbody
+                                                                                tr
+                                                                                    td.attributes_item
+                                                                                        strong #{nom} #{prenom}
+                                                                                tr
+                                                                                    td.attributes_item
+                                                                                        span.f-fallback
+                                                                                            strong Adresse:
+                                                                                            |  #{adresse}
+                                                                                tr
+                                                                                    td.attributes_item
+                                                                                        span.f-fallback
+                                                                                            strong CP ville:
+                                                                                            |  #{cp}
+
+
+                                    table(border='0' cellpadding='0' cellspacing='0' width='100%' style='max-width: 600px;')
+                                        // start copy
+                                        tbody
+                                            tr(align='left' bgcolor='#ffffff' style="padding: 24px; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px;")
+                                                p(style='margin: 0;')
+                                                | Voici un résumé de votre récente commande.
+                                                // end copy
+                                                // start receipt table
+                                            tr
+                                                td(align='left' bgcolor='#ffffff' style="padding: 24px; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px;")
+                                                    table(border='0' cellpadding='0' cellspacing='0' width='100%')
+                                                    tbody
+                                                        tr
+                                                            td(align='left' bgcolor='#D2C7BA' width='75%' style="padding: 12px;font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px;")
+                                                                strong Photo
+                                                            td(align='left' bgcolor='#D2C7BA' width='25%' style="padding: 12px;font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px;")
+                                                                strong Lien de téléchargement
+                                                            td(align='left' bgcolor='#D2C7BA' width='25%' style="padding: 12px;font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px;")
+                                                                strong Prix HT
+                                                            each val in images
+                                                                tr
+                                                                    td(align='left' width='75%' style="padding: 6px 12px;font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px;") #{val.photo}
+                                                                    td(align='left' width='75%' style="padding: 6px 12px;font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px;") #{val.lien}
+                                                                    td(align='left' width='25%' style="padding: 6px 12px;font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px;") €#{val.prix}
+
+
+
+                                        table(style="margin-top:40px;width:100%")
+                                            tbody 
+                                                tr
+                                                    td(align='right' width='100%' style="padding: 12px; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px; border-top: 2px dashed #D2C7BA; border-bottom: 2px dashed #D2C7BA;") 
+                                                        table(style='with:100%') 
+                                                            tbody 
+                                                                tr 
+                                                                    td 
+                                                                        | Total hors taxe:  
+                                                                    td 
+                                                                        strong €#{totalHT}
+                                                                tr 
+                                                                    td 
+                                                                        | TVA à 20%:  
+                                                                    td 
+                                                                        strong €#{tva}
+                                                                tr 
+                                                                    td 
+                                                                        strong Total TTC en euros: 
+                                                                    td 
+                                                                        strong €#{total}
+
+
+
+                                        table(style="margin-top:40px;width:100%")
+                                            tbody 
+                                                tr 
+                                                    td Nous restons à votre disposition pour toute information complémentaire. Cordialement,

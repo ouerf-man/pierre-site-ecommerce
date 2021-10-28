@@ -12,7 +12,8 @@ const ImageSchema = new Schema({
     tagged: String,
     size1: String,
     size2: String,
-    size3: String
+    size3: String,
+    name: String
 }, { timestamps: true });
 
 

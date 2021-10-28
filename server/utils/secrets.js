@@ -33,4 +33,7 @@ module.exports = {
     secretOrKey: "secret",
     API_HOST: process.env.API_HOST,
     LANDING_PAGE_HOST : process.env.LANDING_PAGE,
+    AZURE_BLOB: process.env.BLOB,
+    REPORTAGE_CONTAINER: process.env.CONTAINER_NAME_REPORTAGE,
+    BLOG_CONTAINER: process.env.CONTAINER_NAME_BLOG
 }

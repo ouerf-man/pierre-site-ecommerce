@@ -26,7 +26,7 @@ router.route('/image').post(imageUpload.single('cover'), function (req, res, nex
         return
     } */
     res.json({
-        url: req.file ? req.protocol + "://" + req.get("host") + "/assets/blog/" + req.file.filename : ''
+        url: req.file ? req.file.url : ''
     })
 })
 module.exports = router;
