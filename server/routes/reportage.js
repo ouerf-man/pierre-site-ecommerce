@@ -8,7 +8,7 @@ router.route('').post(reportageService.addReportage)
     .get(reportageService.getAll)
 
 router.route('/:slug').get(reportageService.getBySlug)
-router.route('/id/:id').get(reportageService.getById)
+router.route('/id/:id').get(reportageService.getById).delete(reportageService.deleteOne)
 router.route('/filter/:query').get(reportageService.filter)
 router.route('/image/:id').get(reportageService.getPhotoById)
 const fields = [{ name: 'tagged', maxCount: 1 }, { name: 'size1', maxCount: 1 }, { name: 'size2', maxCount: 1 }, { name: 'size3', maxCount: 1 }]

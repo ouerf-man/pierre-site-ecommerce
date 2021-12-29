@@ -239,7 +239,7 @@ export default function EspaceClient() {
               className="btn btn-secondary mt-3"
               onClick={() => handlePaymentRequest()}
             >
-              Informations de payment
+              Informations de paiement
             </button>
           </div>
         )}

@@ -48,6 +48,21 @@ export const getReportage = (id) => {
         });
 }
 
+export const deleteReportage = (id) => {
+    return axios.delete(`${api}/reportage/id/${id}`)
+        .then(res => {
+            if (res.status === 200) {
+                return res.data || null;
+            } else {
+                return null
+            }
+        })
+        .catch(err => {
+            console.log(err);
+            return null;
+        });
+}
+
 export const addPhoto = (id, body) => {
     return axios.post(`${api}/reportage/${id}/image`, body)
         .then(res => {
@@ -162,6 +177,37 @@ export const updateCoeff = (id,body) => {
 
 export const getCoeff = () => {
     return axios.get(`${api}/coeff`)
+        .then(res => {
+            if (res.status === 200) {
+                return res.data || null;
+            } else {
+                return null
+            }
+        })
+        .catch(err => {
+            console.log(err);
+            return null;
+        });
+}
+
+
+export const getInfos = () => {
+    return axios.get(`${api}/infos`)
+        .then(res => {
+            if (res.status === 200) {
+                return res.data || null;
+            } else {
+                return null
+            }
+        })
+        .catch(err => {
+            console.log(err);
+            return null;
+        });
+}
+
+export const updateInfos = (id,body) => {
+    return axios.put(`${api}/infos/${id}`,body)
         .then(res => {
             if (res.status === 200) {
                 return res.data || null;

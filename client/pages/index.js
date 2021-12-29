@@ -3,8 +3,8 @@ import Link from "next/link";
 import styles from "../styles/Home.module.css";
 import Image from "next/image";
 import { Carousel } from "react-bootstrap";
-import axios from "axios";
 import { useEffect, useState } from "react";
+import { getInfos } from "../src/services/api.cms.service";
 
 const carouselPics = [
   {
@@ -39,7 +39,8 @@ const carouselPics = [
   },
 ];
 
-export default function Home() {
+export default function Home(props) {
+  const infos = props.infos
   useEffect(() => {}, []);
   const [bgDisplay, setDisplay] = useState("");
   return (
@@ -50,8 +51,8 @@ export default function Home() {
         <link rel="icon" href="/logo-pierre-3.png" />
       </Head>
       <div className={styles.blackbg} style={{ visibility: bgDisplay }}>
-        <h1>Lorem ipsum</h1>
-        <p>lorem ipsum diamit lendra</p>
+        <h1>{infos.title}</h1>
+        <p>{infos.description}</p>
       </div>
       <main className={styles.main}>
         <div className={styles.logo}>
@@ -90,4 +91,13 @@ export default function Home() {
       </main>
     </>
   );
+}
+
+export async function getServerSideProps(context) {
+  const result = await getInfos();
+  return {
+    props: {
+      infos: result.success ? result.data : {},
+    }, // will be passed to the page component as props
+  };
 }

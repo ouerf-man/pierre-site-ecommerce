@@ -43,7 +43,7 @@ export default function Temoignage() {
     return (
         <>
             <Head>
-                <title>Pierre Gassin | Reportages</title>
+                <title>Pierre Gassin | Temoignages</title>
                 <meta name="viewport" content="width=device-width,initial-scale=1" />
                 <link rel="icon" href="/logo-pierre-3.png" />
             </Head>

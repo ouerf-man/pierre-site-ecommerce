@@ -42,7 +42,7 @@ export default function Home(props) {
                   <div id="myDropdown" class={styles.dropdownContent}>
                     <input
                       type="text"
-                      placeholder="Search.."
+                      placeholder="Recherche.."
                       id="myInput"
                       className={styles.myInputId}
                       onKeyUp={(e) => filterFunction(e)}

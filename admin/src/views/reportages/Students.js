@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react'
-import { useHistory, useLocation } from 'react-router-dom'
+import React, { useState, useEffect } from "react";
+import { useHistory, useLocation } from "react-router-dom";
 import {
   CBadge,
   CCard,
@@ -10,48 +10,57 @@ import {
   CRow,
   CPagination,
   CButton,
-} from '@coreui/react'
+} from "@coreui/react";
 
-import { useRef } from 'react'
-import { getReportages } from 'src/services/api.service'
-import { useToasts } from "react-toast-notifications"
-const getBadge = status => {
+import { useRef } from "react";
+import { deleteReportage, getReportages } from "src/services/api.service";
+import { useToasts } from "react-toast-notifications";
+const getBadge = (status) => {
   switch (status) {
-    case 'Active': return 'success'
-    case 'Inactive': return 'secondary'
-    case 'Pending': return 'warning'
-    case 'Banned': return 'danger'
-    default: return 'primary'
+    case "Active":
+      return "success";
+    case "Inactive":
+      return "secondary";
+    case "Pending":
+      return "warning";
+    case "Banned":
+      return "danger";
+    default:
+      return "primary";
   }
-}
+};
 
 const Users = () => {
-  const history = useHistory()
-  const queryPage = useLocation().search.match(/page=([0-9]+)/, '')
-  const currentPage = Number(queryPage && queryPage[1] ? queryPage[1] : 1)
+  const history = useHistory();
+  const queryPage = useLocation().search.match(/page=([0-9]+)/, "");
+  const currentPage = Number(queryPage && queryPage[1] ? queryPage[1] : 1);
   const [reportages, setReportages] = useState(null);
-  const [page, setPage] = useState(currentPage)
-  const { addToast } = useToasts()
+  const [page, setPage] = useState(currentPage);
+  const { addToast } = useToasts();
   const fileInput = useRef(null);
+  const [supprimer, setDelete] = useState(false);
 
-  const pageChange = newPage => {
-    currentPage !== newPage && history.push(`/students?page=${newPage}`)
-  }
-
+  const handleDelete = async (id) => {
+    const result = await deleteReportage(id);
+    if (result.success) setDelete(false);
+    else alert(result.message);
+  };
+  const pageChange = (newPage) => {
+    currentPage !== newPage && history.push(`/students?page=${newPage}`);
+  };
 
   const getAllReportages = async () => {
     const result = await getReportages();
     setReportages(result.data);
-  }
-
+  };
 
   useEffect(() => {
     getAllReportages();
-  }, [])
+  }, []);
 
   useEffect(() => {
-    currentPage !== page && setPage(currentPage)
-  }, [currentPage, page])
+    currentPage !== page && setPage(currentPage);
+  }, [currentPage, page]);
 
   return (
     <CRow>
@@ -59,7 +68,12 @@ const Users = () => {
         <CCard>
           <CCardHeader>
             Reportages
-            <CButton color="success" size="sm" className="ml-5" onClick={() => history.push("/create-reportage")}>
+            <CButton
+              color="success"
+              size="sm"
+              className="ml-5"
+              onClick={() => history.push("/create-reportage")}
+            >
               Ajouter un reportage
             </CButton>
           </CCardHeader>
@@ -67,24 +81,61 @@ const Users = () => {
             <CDataTable
               items={reportages}
               fields={[
-                { key: 'slug', _classes: 'font-weight-bold' },
-                'title', 'description'
+                { key: "slug", _classes: "font-weight-bold" },
+                "title",
+                "description",
+                {
+                  key: 'Supprimer',
+                  label: 'Actions',
+                  sorter: false,
+                  filter: false
+                }
               ]}
               hover
               striped
               itemsPerPage={5}
               activePage={page}
               clickableRows
-              onRowClick={(item) => history.push(`/create-reportage/${item._id}`)}
+              onRowClick={(item) =>
+                history.push(`/create-reportage/${item._id}`)
+              }
               scopedSlots={{
-                'status':
-                  (item) => (
+                status: (item) => (
+                  <td>
+                    <CBadge color={getBadge(item.status)}>{item.status}</CBadge>
+                  </td>
+                ),
+                Supprimer: (item, index) => {
+                  return (
                     <td>
-                      <CBadge color={getBadge(item.status)}>
-                        {item.status}
-                      </CBadge>
+                      {supprimer ? (
+                        <CButton
+                          color="danger"
+                          variant="outline"
+                          shape="square"
+                          size="sm"
+                          onClick={() => {
+                            handleDelete(item._id);
+                          }}
+                        >
+                          Veuillez confirmer
+                        </CButton>
+                      ) : (
+                        <CButton
+                          color="danger"
+                          variant="outline"
+                          shape="square"
+                          size="sm"
+                          onClick={() => {
+                            setDelete(true);
+                          }}
+                        >
+                          Supprimer
+                        </CButton>
+                      )}
                     </td>
-                  )
+                  );
+                },
               }}
             />
             <CPagination
@@ -98,7 +149,7 @@ const Users = () => {
         </CCard>
       </CCol>
     </CRow>
-  )
-}
+  );
+};
 
-export default Users
+export default Users;

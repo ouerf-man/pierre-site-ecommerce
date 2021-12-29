@@ -1,6 +1,7 @@
 import React from "react";
 
 const Dashboard = React.lazy(() => import("./views/dashboard/Dashboard"));
+const CMS = React.lazy(() => import("./views/cms/CMS"));
 
 const Reportages = React.lazy(() => import("./views/reportages/Students"));
 const Reportage = React.lazy(() => import("./views/reportages/Student"));
@@ -16,6 +17,8 @@ const Coeff = React.lazy(() => import("./views/coeff"));
 const routes = [
   { path: "/", exact: true, name: "Acceuil" },
   { path: "/dashboard", name: "Dashboard", component: Dashboard },
+  { path: "/cms", name: "CMS", component: CMS },
+
   { path: "/reportages", exact: true, name: "Les Reportages", component: Reportages },
   { path: "/create-reportage", exact: true, name: "information du reportage", component: AddReportage, },
   { path: "/create-reportage/:id", exact: true, name: "information du reportage", component: AddReportage, },

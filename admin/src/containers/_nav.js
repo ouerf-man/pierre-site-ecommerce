@@ -2,7 +2,7 @@ import React from "react";
 import CIcon from "@coreui/icons-react";
 
 const _nav = [
-  {
+  /* {
     _tag: "CSidebarNavItem",
     name: "Dashboard",
     to: "/dashboard",
@@ -11,7 +11,7 @@ const _nav = [
       color: "info",
       text: "NEW",
     },
-  },
+  }, */
   {
     _tag: "CSidebarNavTitle",
     _children: ["Données"],

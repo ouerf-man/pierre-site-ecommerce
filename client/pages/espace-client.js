@@ -51,7 +51,7 @@ function EspaceClient(props) {
     return (
         <>
             <Head>
-                <title>Pierre Gassin | Espace Client</title>
+                <title>Pierre Gassin | Espace Editeur</title>
                 <meta name="viewport" content="width=device-width,initial-scale=1" />
                 <link rel="icon" href="/logo-pierre-3.png" />
             </Head>
@@ -59,7 +59,7 @@ function EspaceClient(props) {
                 <div className="col-md-4 px-0">
                     <div className="left-panel">
                         <div className="py-5">
-                            <h1 className="left-title">Espace Client</h1>
+                            <h1 className="left-title">Espace Editeur</h1>
                         </div>
                     </div>
                 </div>
@@ -74,7 +74,7 @@ function EspaceClient(props) {
                             {
                                 e.images.map((img, i) => (
                                     <div className="d-flex align-items-center">
-                                        <div style={{ width: 100, height: 100, position: 'relative', marginBottom: '25px', display: 'inline-block' }}>
+                                        <div style={{ width: 250, height: 250, position: 'relative', marginBottom: '25px', display: 'inline-block' }}>
                                             <Image src={img.tagged}
                                                 layout='fill'
                                                 objectFit='cover'

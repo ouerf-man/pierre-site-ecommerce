@@ -65,6 +65,20 @@ exports.getAll = async (req, res, next) => {
   }
 };
 
+exports.deleteOne = async (req, res, next) => {
+  try {
+      const reportage = await Reportage.findByIdAndDelete(req.params.id)
+      return res.status(200).json({
+          success: true,
+      })
+  } catch (e) {
+      return res.status(500).json({
+          success: false,
+          message: "something went wrong"
+      })
+  }
+}
+
 exports.addPhoto = async (req, res, next) => {
   if (!req.params.id) {
     return res.status(404).json({
