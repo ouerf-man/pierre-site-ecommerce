@@ -14,7 +14,7 @@ export default function Home(props) {
   async function filterFunction(e) {
     try {
       setSearchLoadtingTo(true);
-      console.log(e.target.value)
+      console.log(e.target.value);
       const reps = await filterReportage(e.target.value);
       if (reps) {
         setSearchLoadtingTo(false);
@@ -22,7 +22,7 @@ export default function Home(props) {
       setFilterResultTo(reps.data);
     } catch (e) {
       setSearchLoadtingTo(false);
-      setFilterResultTo(null)
+      setFilterResultTo(null);
     }
   }
 
@@ -84,7 +84,9 @@ export default function Home(props) {
                 <div className={`${styles.overlay}`}>
                   <h2>{e.title}</h2>
                   <hr />
-                  <p>{e.description}</p>
+                  <div
+                    dangerouslySetInnerHTML={{ __html: e.description }}
+                  ></div>
                 </div>
               </div>
             </Link>

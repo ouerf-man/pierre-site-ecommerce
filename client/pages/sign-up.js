@@ -5,7 +5,6 @@ import { connect } from "react-redux";
 import { signUp } from "../src/state/actions/actionCreator";
 import toast from "../src/components/Toast";
 import countriesJson from "countries-code";
-
 import WithOutAuth from "../src/components/WithOutAuth";
 function Signup(props) {
   const notify = useCallback((type, message) => {
@@ -19,8 +18,13 @@ function Signup(props) {
     aux[e.target.name] = e.target.value;
     setUserDetailsTo(aux);
   };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!checkFields(userDetails)) {
+      notify("error", "Code TVA sous format AA00000000000");
+      return false;
+    }
     dispatch(signUp(userDetails)).then((res) => {
       if (res.success) {
         notify("success", res.message);
@@ -28,6 +32,19 @@ function Signup(props) {
         notify("error", res.message);
       }
     });
+  };
+
+  const checkFields = (body) => {
+    if (
+      !(body.tva && /^[A-Z]{2}[0-9]{11}$/.test(body.tva.trim())) ||
+      !countries
+        .map((e) => e.alpha2)
+        .includes(`${body.tva.trim()[0]}${body.tva.trim()[1]}`)
+    ) {
+      return false;
+    }
+
+    return true;
   };
   return (
     <>
@@ -151,18 +168,17 @@ function Signup(props) {
                 <input
                   required
                   type="text"
-                  id="tva"
+                  id="telephone"
                   className="fadeIn third"
-                  name="tva"
+                  name="phone"
                   placeholder="Téléphone"
                   onChange={handleChange}
                 />
                 <input
-                  required
                   type="text"
-                  id="telephone"
+                  id="tva"
                   className="fadeIn third"
-                  name="phone"
+                  name="tva"
                   placeholder="Code TVA intracommunautaire de l'entreprise"
                   onChange={handleChange}
                 />
@@ -220,10 +236,10 @@ function Signup(props) {
 }
 
 export async function getStaticProps() {
-  const temp = countriesJson.allCountriesList()
+  const temp = countriesJson.allCountriesList();
   return {
     props: {
-      countries:temp,
+      countries: temp,
     },
   };
 }

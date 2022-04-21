@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react'
-import { useHistory, useLocation } from 'react-router-dom'
+import React, { useState, useEffect } from "react";
+import { useHistory, useLocation } from "react-router-dom";
 import {
   CBadge,
   CCard,
@@ -10,54 +10,61 @@ import {
   CRow,
   CPagination,
   CButton,
-} from '@coreui/react'
+} from "@coreui/react";
 
-import { useRef } from 'react'
-import { deleteBlog, getBlogs } from 'src/services/api.service'
-import { useToasts } from "react-toast-notifications"
-const getBadge = status => {
+import { useRef } from "react";
+import { deleteBlog, getBlogs } from "src/services/api.service";
+import { useToasts } from "react-toast-notifications";
+const getBadge = (status) => {
   switch (status) {
-    case 'Active': return 'success'
-    case 'Inactive': return 'secondary'
-    case 'Pending': return 'warning'
-    case 'Banned': return 'danger'
-    default: return 'primary'
+    case "Active":
+      return "success";
+    case "Inactive":
+      return "secondary";
+    case "Pending":
+      return "warning";
+    case "Banned":
+      return "danger";
+    default:
+      return "primary";
   }
-}
+};
 
 const Users = () => {
-  const history = useHistory()
-  const queryPage = useLocation().search.match(/page=([0-9]+)/, '')
-  const currentPage = Number(queryPage && queryPage[1] ? queryPage[1] : 1)
-  const [page, setPage] = useState(currentPage)
+  const history = useHistory();
+  const queryPage = useLocation().search.match(/page=([0-9]+)/, "");
+  const currentPage = Number(queryPage && queryPage[1] ? queryPage[1] : 1);
+  const [page, setPage] = useState(currentPage);
 
-  const [supprimer, setDelete] = useState(false)
+  const [supprimer, setDelete] = useState([false]);
 
-  const pageChange = newPage => {
-    currentPage !== newPage && history.push(`/students?page=${newPage}`)
-  }
+  const pageChange = (newPage) => {
+    currentPage !== newPage && history.push(`/students?page=${newPage}`);
+  };
 
-  const [blogs, setBlogs] = useState([])
+  const [blogs, setBlogs] = useState([]);
 
   const getBlogsEffect = async () => {
-    const result = await getBlogs()
-    setBlogs(result.data)
-  }
+    const result = await getBlogs();
+    setBlogs(result.data);
+  };
 
   const handleDelete = async (id) => {
-    const result = await deleteBlog(id)
-    if (result.success)
-      setDelete(false)
-    else alert(result.message)
-  }
+    const result = await deleteBlog(id);
+    if (result.success) {
+      const aux = { ...supprimer };
+      aux[id] = false;
+      setDelete(aux);
+    } else alert(result.message);
+  };
 
   useEffect(() => {
-    getBlogsEffect()
-  }, [])
+    getBlogsEffect();
+  }, []);
 
   useEffect(() => {
-    currentPage !== page && setPage(currentPage)
-  }, [currentPage, page])
+    currentPage !== page && setPage(currentPage);
+  }, [currentPage, page]);
 
   return (
     <CRow>
@@ -65,7 +72,12 @@ const Users = () => {
         <CCard>
           <CCardHeader>
             Blogs
-            <CButton color="success" size="sm" className="ml-5" onClick={() => history.push("/create-blog")}>
+            <CButton
+              color="success"
+              size="sm"
+              className="ml-5"
+              onClick={() => history.push("/create-blog")}
+            >
               Ajouter un blog
             </CButton>
           </CCardHeader>
@@ -73,45 +85,50 @@ const Users = () => {
             <CDataTable
               items={blogs}
               fields={[
-                { key: 'slug', _classes: 'font-weight-bold' },
-                'title',
+                { key: "slug", _classes: "font-weight-bold" },
+                "title",
                 {
-                  key: 'Supprimer',
-                  label: 'Actions',
+                  key: "Supprimer",
+                  label: "Actions",
                   sorter: false,
-                  filter: false
-                }
+                  filter: false,
+                },
               ]}
               hover
               striped
               itemsPerPage={5}
               activePage={page}
               scopedSlots={{
-                'Supprimer': (item, index) => {
+                Supprimer: (item, index) => {
                   return (
                     <td>
-                      {
-                        supprimer ?
-                          <CButton
-                            color="danger"
-                            variant="outline"
-                            shape="square"
-                            size="sm"
-                            onClick={() => { handleDelete(item._id) }}
-                          >
-                            Veuillez confirmer
-                          </CButton>
-                          :
-                          <CButton
-                            color="danger"
-                            variant="outline"
-                            shape="square"
-                            size="sm"
-                            onClick={() => { setDelete(true) }}
-                          >
-                            Supprimer
-                          </CButton>
-                      }
+                      {supprimer[item._id] ? (
+                        <CButton
+                          color="danger"
+                          variant="outline"
+                          shape="square"
+                          size="sm"
+                          onClick={() => {
+                            handleDelete(item._id);
+                          }}
+                        >
+                          Veuillez confirmer
+                        </CButton>
+                      ) : (
+                        <CButton
+                          color="danger"
+                          variant="outline"
+                          shape="square"
+                          size="sm"
+                          onClick={() => {
+                            const aux = { ...supprimer };
+                            aux[item._id] = true;
+                            setDelete(aux);
+                          }}
+                        >
+                          Supprimer
+                        </CButton>
+                      )}
                       <CButton
                         color="primary"
                         variant="outline"
@@ -122,8 +139,8 @@ const Users = () => {
                         Mise à jour
                       </CButton>
                     </td>
-                  )
-                }
+                  );
+                },
               }}
             />
             <CPagination
@@ -137,7 +154,7 @@ const Users = () => {
         </CCard>
       </CCol>
     </CRow>
-  )
-}
+  );
+};
 
-export default Users
+export default Users;

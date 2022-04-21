@@ -30,3 +30,9 @@ export const login = body => {
         return res.data
     })
 }
+
+export const contact = body =>  {
+    return axios.post(`${API}/contact`, body).then(res => {
+        return res.data
+    })
+}

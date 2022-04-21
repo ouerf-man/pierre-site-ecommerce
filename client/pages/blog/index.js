@@ -13,15 +13,15 @@ export default function Home({blogs}) {
                 <meta name="viewport" content="width=device-width,initial-scale=1" />
                 <link rel="icon" href="/logo-pierre-3.png" />
             </Head>
-            <main className="row w-100 overflow-hidden mx-0">
-                <div className="col-xs-12 col-md-4 px-0">
+            <main className="row w-100 overflow-hidden mx-0 flex-column flex-md-row">
+                <div className="col-xs-12 col-md-4 px-0 px-0 left-panel-parent">
                     <div className="left-panel">
                         <div className="py-5">
                             <h1 className="left-title">Blog</h1>
                         </div>
                     </div>
                 </div>
-                <div className="col mt-5 row justify-content-around align-items-stretch pr-0 overflow-hidden">
+                <div className="col col-xs-12 mt-5 row justify-content-around align-items-stretch pr-0 overflow-hidden">
                     {
                         blogs.map((e, i) =>
                             <Link href={`/blog/${e.slug}`} key={i}>

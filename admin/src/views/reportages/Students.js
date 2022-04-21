@@ -29,7 +29,6 @@ const getBadge = (status) => {
       return "primary";
   }
 };
-
 const Users = () => {
   const history = useHistory();
   const queryPage = useLocation().search.match(/page=([0-9]+)/, "");
@@ -38,29 +37,37 @@ const Users = () => {
   const [page, setPage] = useState(currentPage);
   const { addToast } = useToasts();
   const fileInput = useRef(null);
-  const [supprimer, setDelete] = useState(false);
+  const [supprimer, setDelete] = useState([false]);
+  const [pagesCount, setPagesCount] = useState(null);
 
   const handleDelete = async (id) => {
     const result = await deleteReportage(id);
-    if (result.success) setDelete(false);
-    else alert(result.message);
+    if (result.success) {
+      const aux = { ...supprimer };
+      aux[id] = false;
+      setDelete(aux);
+    } else alert(result.message);
+    getAllReportages();
   };
   const pageChange = (newPage) => {
-    currentPage !== newPage && history.push(`/students?page=${newPage}`);
+    currentPage !== newPage && history.push(`/reportages?page=${newPage}`);
+    setPage(newPage)
   };
 
-  const getAllReportages = async () => {
-    const result = await getReportages();
+  const getAllReportages = async (page) => {
+    const result = await getReportages(page, 5);
     setReportages(result.data);
+    setPagesCount(result.count);
+    const arr = {};
+    result.data.forEach((element) => {
+      arr[element._id] = false;
+    });
   };
-
-  useEffect(() => {
-    getAllReportages();
-  }, []);
 
   useEffect(() => {
     currentPage !== page && setPage(currentPage);
-  }, [currentPage, page]);
+    getAllReportages(currentPage);
+  }, [currentPage,page]);
 
   return (
     <CRow>
@@ -85,20 +92,20 @@ const Users = () => {
                 "title",
                 "description",
                 {
-                  key: 'Supprimer',
-                  label: 'Actions',
+                  key: "Supprimer",
+                  label: "Actions",
                   sorter: false,
-                  filter: false
-                }
+                  filter: false,
+                },
               ]}
               hover
               striped
-              itemsPerPage={5}
+              itemsPerPage={10}
               activePage={page}
               clickableRows
-              onRowClick={(item) =>
+              /* onRowClick={(item) =>
                 history.push(`/create-reportage/${item._id}`)
-              }
+              } */
               scopedSlots={{
                 status: (item) => (
                   <td>
@@ -108,7 +115,7 @@ const Users = () => {
                 Supprimer: (item, index) => {
                   return (
                     <td>
-                      {supprimer ? (
+                      {supprimer[item._id] ? (
                         <CButton
                           color="danger"
                           variant="outline"
@@ -127,12 +134,25 @@ const Users = () => {
                           shape="square"
                           size="sm"
                           onClick={() => {
-                            setDelete(true);
+                            const aux = { ...supprimer };
+                            aux[item._id] = true;
+                            setDelete(aux);
                           }}
                         >
                           Supprimer
                         </CButton>
                       )}
+                      <CButton
+                        color="primary"
+                        variant="outline"
+                        shape="square"
+                        size="sm"
+                        onClick={() =>
+                          history.push(`/create-reportage/${item._id}`)
+                        }
+                      >
+                        Mise à jour
+                      </CButton>
                     </td>
                   );
                 },
@@ -141,7 +161,7 @@ const Users = () => {
             <CPagination
               activePage={page}
               onActivePageChange={pageChange}
-              pages={5}
+              pages={pagesCount}
               doubleArrows={false}
               align="center"
             />

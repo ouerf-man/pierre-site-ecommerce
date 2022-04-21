@@ -26,10 +26,10 @@ module.exports = {
         CLIENT_ID: process.env.PAYPAL_CLIENT_ID,
         CLIENT_SECRET: process.env.PAYPAL_SECRET
     }, */
-    /* ADMIN:{
+    ADMIN:{
         email : process.env.ADMIN_EMAIL,
         password : process.env.ADMIN_PASSWORD
-    }, */
+    },
     secretOrKey: "secret",
     API_HOST: process.env.API_HOST,
     LANDING_PAGE_HOST : process.env.LANDING_PAGE,

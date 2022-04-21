@@ -8,8 +8,9 @@ const cors = require("cors");
 const { sendEmail } = require("./helpers/sendEmail");
 
 const dbService = require("./configs/db.service");
+const adminService = require("./configs/admin.config");
 const coeffInit = require("./configs/initCoeffs");
-const infoInit = require('./configs/initInfos')
+const infoInit = require("./configs/initInfos");
 
 const userRouter = require("./routes/user");
 const reportageRouter = require("./routes/reportage");
@@ -17,6 +18,8 @@ const blogRouter = require("./routes/blog");
 const paymentRouter = require("./routes/payment");
 const coeffRouter = require("./routes/coeff");
 const infoRouter = require("./routes/webSiteInfo");
+const adminRouter = require("./routes/admin");
+const contactRouter = require("./routes/contact");
 
 const { renderFile } = require("jade");
 const app = express();
@@ -38,6 +41,7 @@ app.use(passport.initialize());
 require("./utils/passport")(passport);
 // connecting to database
 dbService.establishConnection();
+adminService();
 coeffInit();
 infoInit();
 app.use("/health", function (req, res) {
@@ -49,6 +53,8 @@ app.use("/blog", blogRouter);
 app.use("/payment", paymentRouter);
 app.use("/coeff", coeffRouter);
 app.use("/infos", infoRouter);
+app.use("/admin", adminRouter);
+app.use("/contact", contactRouter);
 
 app.get("/test", async (req, res) => {
   res.render("devi.jade", {

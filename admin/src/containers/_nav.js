@@ -34,6 +34,16 @@ const _nav = [
     to: "/coeff",
     icon: "cil-pencil",
   },
+  {
+    _tag: "CSidebarNavTitle",
+    _children: ["Contacts"],
+  },
+  {
+    _tag: "CSidebarNavItem",
+    name: "Messages",
+    to: "/contact",
+    icon: "cil-user",
+  },
   /*{
     _tag: 'CSidebarNavItem',
     name: 'Typography',
