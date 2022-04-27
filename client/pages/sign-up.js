@@ -90,7 +90,7 @@ function Signup(props) {
                   id="firstName"
                   className="fadeIn first"
                   name="firstName"
-                  placeholder="prenom"
+                  placeholder="Prenom"
                   onChange={handleChange}
                 />
                 <input
@@ -99,7 +99,7 @@ function Signup(props) {
                   id="lastName"
                   className="fadeIn first"
                   name="lastName"
-                  placeholder="nom"
+                  placeholder="Nom"
                   onChange={handleChange}
                 />
                 <input
@@ -108,12 +108,12 @@ function Signup(props) {
                   id="company"
                   className="fadeIn first"
                   name="company"
-                  placeholder="entreprise"
+                  placeholder="Entreprise"
                   onChange={handleChange}
                 />
                 <select
                   required
-                  name="country"
+                  name="Country"
                   className="form-select"
                   aria-label="Default select example"
                   onChange={handleChange}
@@ -132,10 +132,19 @@ function Signup(props) {
                 <input
                   required
                   type="text"
+                  id="ville"
+                  className="fadeIn second"
+                  name="ville"
+                  placeholder="Ville"
+                  onChange={handleChange}
+                />
+                <input
+                  required
+                  type="text"
                   id="rue"
                   className="fadeIn second"
-                  name="adress"
-                  placeholder="numero et nom de rue"
+                  name="Adress"
+                  placeholder="Numero et nom de rue"
                   onChange={handleChange}
                 />
                 <input
@@ -197,7 +206,7 @@ function Signup(props) {
                   id="login"
                   className="fadeIn fourth"
                   name="email"
-                  placeholder="email"
+                  placeholder="Email"
                   onChange={handleChange}
                 />
                 <input
@@ -206,7 +215,7 @@ function Signup(props) {
                   id="password"
                   className="fadeIn fourth mb-3"
                   name="password"
-                  placeholder="mot de passe"
+                  placeholder="Mot de passe"
                   onChange={handleChange}
                 />
                 <input

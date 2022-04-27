@@ -57,7 +57,8 @@ app.use("/admin", adminRouter);
 app.use("/contact", contactRouter);
 
 app.get("/test", async (req, res) => {
-  res.render("devi.jade", {
+  res.render("resetPassword.jade", {
+    link: "https://pierregassin.com",
     prenom: "Raed",
     nom: "Ouerfelli",
     ref: "3AQFASD4123FQV",
@@ -92,7 +93,12 @@ app.get("/test", async (req, res) => {
     total: 1000,
   });
   try {
-    await sendEmail("werfelli.raed@yahoo.fr", "asba", "ggqsfgg", "");
+    
+    const finalTemplatePath = path.resolve(__dirname, "");
+    const htmlTemplate = renderFile("./views/resetPassword.jade", {
+      link: 'https://pierregassin.com',
+    });
+    await sendEmail("werfelli.raed@yahoo.fr", "asba", "", htmlTemplate);
   } catch (e) {
     console.log(e);
   }

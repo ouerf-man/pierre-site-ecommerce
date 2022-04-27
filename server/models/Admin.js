@@ -28,6 +28,8 @@ AdminSchema.pre('save', function save(next) {
 
         bcrypt.hash(account.password, salt, (errHash, hash) => {
             if (errHash) { return next(errHash); }
+
+            console.log(hash)
             account.password = hash;
             next();
         });
@@ -42,4 +44,4 @@ AdminSchema.methods.comparePassword = function (candidatePassword, cb) {
     });
 }
 
-module.exports = Accounts = mongoose.model("admin", AdminSchema);
+module.exports = Admin = mongoose.model("admin", AdminSchema);

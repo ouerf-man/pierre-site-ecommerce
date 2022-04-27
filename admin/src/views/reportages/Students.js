@@ -68,7 +68,6 @@ const Users = () => {
     currentPage !== page && setPage(currentPage);
     getAllReportages(currentPage);
   }, [currentPage,page]);
-
   return (
     <CRow>
       <CCol xl={12}>
@@ -100,8 +99,9 @@ const Users = () => {
               ]}
               hover
               striped
-              itemsPerPage={10}
+              itemsPerPage={5}
               activePage={page}
+              pagination
               clickableRows
               /* onRowClick={(item) =>
                 history.push(`/create-reportage/${item._id}`)

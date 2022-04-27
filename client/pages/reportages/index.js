@@ -53,10 +53,10 @@ export default function Home(props) {
                       </div>
                     )}
                     {filterResult &&
-                      filterResult.map((e) => (
-                        <a className={styles.searchItem} href="#about">
+                      filterResult.map((e,i) => (
+                        <Link href={`/reportages/${e.slug}`} key={i} className={styles.searchItem}>
                           {e.title}
-                        </a>
+                        </Link>
                       ))}
                   </div>
                 </form>

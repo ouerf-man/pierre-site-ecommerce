@@ -1,3 +1,4 @@
 module.exports = {
-    SUPER_ADMIN : 'superAdmin',
+    ADMIN : 'ADMIN',
+    SUPER_ADMIN: 'SUPER_ADMIN'
 }

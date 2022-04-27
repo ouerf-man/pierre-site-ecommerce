@@ -1,7 +1,12 @@
 const Account = require("../../models/Account");
+const Token = require("../../models/Token");
 const jwt = require("jsonwebtoken");
 const secrets = require("../../utils/secrets");
-//const crypto = require('crypto');
+const crypto = require("crypto");
+const bcrypt = require("bcrypt");
+const { sendEmail } = require("../../helpers/sendEmail");
+const path = require("path");
+const jade = require("jade");
 
 exports.signUp = async (req, res, next) => {
   const body = req.body;
@@ -11,6 +16,7 @@ exports.signUp = async (req, res, next) => {
     password,
     company,
     country,
+    ville,
     adress,
     appartement,
     region,
@@ -45,6 +51,7 @@ exports.signUp = async (req, res, next) => {
       password,
       company,
       country,
+      ville,
       adress,
       appartement,
       region,
@@ -156,3 +163,86 @@ exports.login = async (req, res, next) => {
     }
   });
 };
+
+exports.requestPasswordReset = async (req, res, next) => {
+  const user = await Account.findOne({ email: req.query.email });
+
+  if (!user) {
+    res.status(404).json({
+      success: false,
+      message: "Utilisateur non trouvé",
+    });
+  }
+
+  let token = await Token.findOne({ userId: user._id });
+  if (token) await token.deleteOne();
+  let resetToken = crypto.randomBytes(32).toString("hex");
+  const hash = await bcrypt.hash(resetToken, Number(secrets.BCRYPT_SALT));
+
+  await new Token({
+    userId: user._id,
+    token: hash,
+    createdAt: Date.now(),
+  }).save();
+  console.log(secrets);
+  const link = `${secrets.LANDING_PAGE_HOST}/login?token=${resetToken}&id=${user._id}`;
+  await sendEmailHelper(user.email, link, "../../views/resetPassword.jade");
+  res.status(200).json({
+    success: true,
+    message:
+      "Un courriel a été envoyé à votre adresse email pour réinitialiser votre mot de passe.",
+  });
+};
+
+exports.resetPassword = async (req, res, next) => {
+  try {
+    let passwordResetToken = await Token.findOne({ userId: req.body.userId });
+    if (!passwordResetToken) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid or expired password reset token",
+      });
+    }
+    const isValid = await bcrypt.compare(
+      req.body.token,
+      passwordResetToken.token
+    );
+    if (!isValid) {
+      res.status(400).json({
+        success: false,
+        message: "Invalid or expired password reset token",
+      });
+    }
+    const account = await Account.findOneById(req.body.userId);
+    const accountObject = new Account(account);
+    accountObject.password = req.body.password;
+    accountObject.save();
+
+    await sendEmailHelper(
+      accountObject.email,
+      "",
+      "../../views/resetPasswordDone.jade"
+    );
+    await passwordResetToken.deleteOne();
+    res.status(200).json({
+      success: true,
+    });
+  } catch (e) {
+    res.status(500).json({
+      success: false,
+      message: "Server error",
+    });
+  }
+};
+
+async function sendEmailHelper(email, link, templatePath) {
+  try {
+    const finalTemplatePath = path.resolve(__dirname, templatePath);
+    const htmlTemplate = jade.renderFile(finalTemplatePath, {
+      link,
+    });
+    await sendEmail(email, "Réinitialiser le mot de passe", "", htmlTemplate);
+  } catch (error) {
+    console.log(error);
+  }
+}

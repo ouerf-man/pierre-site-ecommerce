@@ -296,3 +296,31 @@ export const getContact = ()=>{
       return null;
     });
 }
+
+export const resetPasswordRequest = (email) => {
+  return axios.get(`${api}/admin/resetPassword?email=${email}`).then((res) => {
+    if (res.status === 200) {
+      return res.data || null;
+    } else {
+      return null;
+    }
+  })
+  .catch((err) => {
+    console.log(err);
+    return null;
+  });
+};
+
+export const resetPassword = (body) => {
+  return axios.post(`${api}/admin/resetPassword`, body).then((res) => {
+    if (res.status === 200) {
+      return res.data || null;
+    } else {
+      return null;
+    }
+  })
+  .catch((err) => {
+    console.log(err);
+    return null;
+  });
+};

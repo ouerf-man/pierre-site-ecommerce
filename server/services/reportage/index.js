@@ -96,7 +96,11 @@ exports.getAll = async (req, res, next) => {
     return res.status(200).json({
       success: true,
       data: reportages,
-      count: req.query.page ? (pagesCount % PAGE_SIZE ? parseInt(pagesCount / PAGE_SIZE) + 1 : parseInt(pagesCount / PAGE_SIZE) )  : null,
+      count: req.query.page
+        ? pagesCount % PAGE_SIZE
+          ? parseInt(pagesCount / PAGE_SIZE) + 1
+          : parseInt(pagesCount / PAGE_SIZE)
+        : null,
     });
   } catch (e) {
     console.log(e);
@@ -263,8 +267,12 @@ exports.filter = async (req, res, next) => {
   try {
     const query = req.params.query;
     const reportages = await Reportage.find({
-      title: { $regex: new RegExp(`^${query}`), $options: "i" },
+      $or: [
+        { title: { $regex: new RegExp(`${query}`), $options: "i" } },
+        { description: { $regex: new RegExp(`${query}`), $options: "i" } },
+      ],
     });
+
     return res.status(200).json({
       success: true,
       data: reportages,

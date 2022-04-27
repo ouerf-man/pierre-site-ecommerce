@@ -16,6 +16,7 @@ const AccountSchema = new Schema({
     },
     company: String,
     country: String,
+    ville: String,
     adress: String,
     appartement: String,
     region: String,
