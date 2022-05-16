@@ -80,6 +80,10 @@
   -o-animation: fadeOut ease 10s;
   -ms-animation: fadeOut ease 10s;
 }
+.blackbg p{
+  text-align: center;
+  width: 80%;
+}
 
 .blackbg h1 {
   color: #fff;
@@ -187,5 +191,16 @@
   }
   100% {
     top: -100%!important;
+  }
+}
+
+@media (max-width: 480px) {
+  .blackbg h1 {
+    font-size: 1.2rem!important;
+  }
+  
+  .blackbg p {
+    width: 100% !important;
+    font-size: 12px;
   }
 }

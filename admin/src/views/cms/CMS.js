@@ -79,7 +79,7 @@ const CMS = () => {
                   id="description"
                   name="description"
                   value={description}
-                  onChange={(e) => setTitleTo(e.target.value)}
+                  onChange={(e) => setDescriptionTo(e.target.value)}
                 ></CTextarea>
               </CFormGroup>
             </CCardBody>

@@ -22,7 +22,6 @@ function Signup(props) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!checkFields(userDetails)) {
-      notify("error", "Code TVA sous format AA00000000000");
       return false;
     }
     dispatch(signUp(userDetails)).then((res) => {
@@ -36,11 +35,13 @@ function Signup(props) {
 
   const checkFields = (body) => {
     if (
-      !(body.tva && /^[A-Z]{2}[0-9]{11}$/.test(body.tva.trim())) ||
-      !countries
-        .map((e) => e.alpha2)
-        .includes(`${body.tva.trim()[0]}${body.tva.trim()[1]}`)
+      body.tva &&
+      (!/^[A-Z]{2}[0-9]{11}$/.test(body.tva?.trim()) ||
+        !countries
+          .map((e) => e.alpha2)
+          .includes(`${body.tva.trim()[0]}${body.tva?.trim()[1]}`))
     ) {
+      notify("error", "Code TVA sous format AA00000000000");
       return false;
     }
 
@@ -113,7 +114,7 @@ function Signup(props) {
                 />
                 <select
                   required
-                  name="Country"
+                  name="country"
                   className="form-select"
                   aria-label="Default select example"
                   onChange={handleChange}
@@ -130,7 +131,6 @@ function Signup(props) {
                   })}
                 </select>
                 <input
-                  required
                   type="text"
                   id="ville"
                   className="fadeIn second"
@@ -157,7 +157,6 @@ function Signup(props) {
                   onChange={handleChange}
                 />
                 <input
-                  required
                   type="text"
                   id="region"
                   className="fadeIn second"

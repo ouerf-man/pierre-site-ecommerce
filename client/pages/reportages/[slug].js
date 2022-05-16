@@ -26,6 +26,7 @@ function Home(props) {
   const [finalQuery, setFinalQuery] = useState("");
   const [show, setShow] = useState(false);
   const [selectedIndex, setSelectedIndex] = useState(0);
+  const [selectUnselect, setSelectUnselect] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = (i) => {
     setShow(true);
@@ -58,15 +59,21 @@ function Home(props) {
   };
 
   const handleSelectAll = () => {
-    setSelectedImages(reportage.images);
-    setFinalQuery(
-      reportage.images.reduce((acc, cv) => {
-        if (acc == "") {
-          return acc + cv._id;
-        }
-        return acc + "-" + cv._id;
-      }, "")
-    );
+    if (!selectUnselect) {
+      setSelectedImages(reportage.images);
+      setFinalQuery(
+        reportage.images.reduce((acc, cv) => {
+          if (acc == "") {
+            return acc + cv._id;
+          }
+          return acc + "-" + cv._id;
+        }, "")
+      );
+    } else {
+      setSelectedImages([]);
+      setFinalQuery("");
+    }
+    setSelectUnselect(!selectUnselect);
   };
   return (
     <>
@@ -75,7 +82,7 @@ function Home(props) {
         style={{ ...buttonStyle, top: 10 }}
         className="d-flex align-items-center justify-content-center"
       >
-        Sélectionner toutes les images.
+        {!selectUnselect ? "Sélectionner toutes les images." : "Désélectionner toutes les images."}
       </span>
       <Head>
         <title>Pierre Gassin | Korba Passementerie</title>
@@ -116,9 +123,9 @@ function Home(props) {
                     }}
                   >
                     <button className="btn btn-danger mt-5 text-white">
-                      {
-                        props.isLoggedIn ? 'Acquisition de droit' : 'IDENTIFICATION'
-                      }
+                      {props.isLoggedIn
+                        ? "Acquisition de droit"
+                        : "IDENTIFICATION"}
                     </button>
                   </Link>
                 ))}

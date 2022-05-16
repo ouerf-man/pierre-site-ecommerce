@@ -1,6 +1,6 @@
 import axios from "axios";
 
-//export const api = "http://vps-f7e5e7eb.vps.ovh.net:8080"
+//export const api = "https://api.pierregassin.com"
 export const api = "http://localhost:8080";
 
 export const addReportage = (body) => {

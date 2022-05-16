@@ -87,6 +87,13 @@ a {
   font-weight: bold;
 }
 
+@media (max-width: 480px) {
+  .left-title {
+    font-size: 30px;
+    margin-top: 40px!important;
+  }
+}
+
 .left-paragraph {
   color: #fff;
   opacity: 0.4;

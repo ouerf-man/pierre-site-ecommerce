@@ -195,3 +195,16 @@
 .show {
   display: block;
 }
+
+@media (max-width: 480px) {
+  .search input[type="text"] {
+    padding: 1px;
+    margin-top: 4px;
+    font-size: 12px;
+    border: none;
+    width: 95%;
+  }
+  .photos {
+    padding-right: 1px
+  }
+}
